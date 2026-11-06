@@ -84,7 +84,8 @@ export class AuthController {
       path: '/',
     });
 
-    const targetUrl = dto.redirectTo === 'guide' ? '/guide' : '/';
+    const target = dto.redirectTo || dto.redirect_to || 'main';
+    const targetUrl = target === 'guide' ? '/guide' : '/';
 
     // 브라우저 Form 제출 시 리다이렉트 수행
     const isFormSubmit =

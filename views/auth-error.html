@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPG Sync - 보안 인증 차단</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <link rel="stylesheet" href="/static/global.css?v=1.0.2">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jura:wght@600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+    <style>
+        :root {
+            --bg-base: #0D1117;
+            --bg-widget-dark: rgba(22, 27, 34, 0.9);
+            --accent-danger: #EF4444;
+            --accent-hero: #10B981;
+            --text-main: #E2E8F0;
+            --text-muted: #8B949E;
+            --border-color: #30363D;
+            --border-faint: rgba(255, 255, 255, 0.06);
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: var(--bg-base);
+            font-family: 'Pretendard', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+        }
+        .error-card {
+            background: var(--bg-widget-dark);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7), 0 0 20px rgba(239, 68, 68, 0.1);
+            position: relative;
+            max-width: 440px;
+            width: 90%;
+            padding: 40px 32px;
+            text-align: center;
+            box-sizing: border-box;
+            backdrop-filter: blur(10px);
+        }
+        .error-card::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            bottom: -1px;
+            left: -1px;
+            width: 10px;
+            border-top: 2px solid var(--accent-danger);
+            border-bottom: 2px solid var(--accent-danger);
+            border-left: 2px solid var(--accent-danger);
+            pointer-events: none;
+        }
+        .error-card::after {
+            content: '';
+            position: absolute;
+            top: -1px;
+            bottom: -1px;
+            right: -1px;
+            width: 10px;
+            border-top: 2px solid var(--accent-danger);
+            border-bottom: 2px solid var(--accent-danger);
+            border-right: 2px solid var(--accent-danger);
+            pointer-events: none;
+        }
+        .error-header {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--accent-danger);
+            letter-spacing: 3px;
+            border-bottom: 1px solid var(--border-faint);
+            padding-bottom: 14px;
+            margin-bottom: 24px;
+        }
+        .icon-box {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 20px auto;
+            border-radius: 50%;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-danger);
+            font-size: 1.8rem;
+        }
+        .error-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin: 0 0 12px 0;
+        }
+        .error-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin: 0 0 24px 0;
+        }
+        .reason-box {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px dashed var(--border-color);
+            padding: 12px 14px;
+            text-align: left;
+            font-size: 0.78rem;
+            color: #CBD5E1;
+            margin-bottom: 28px;
+            line-height: 1.5;
+        }
+        .reason-box strong {
+            color: var(--accent-danger);
+        }
+        .action-btn {
+            display: inline-block;
+            width: 100%;
+            padding: 12px 0;
+            background: var(--accent-hero);
+            color: #041E15;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+        }
+        .action-btn:hover {
+            background: #34D399;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="error-card">
+        <div class="error-header">SYSTEM // ACCESS_DENIED</div>
+        <div class="icon-box">
+            <i class="fa-solid fa-shield-xmark"></i>
+        </div>
+        <h2 class="error-title">보안 토큰 검증 차단</h2>
+        <p class="error-desc">
+            요청하신 일회용 매직 링크가 유효하지 않거나 이미 폐기되었습니다.
+        </p>
+        <div class="reason-box">
+            • <strong>방어 사유</strong>: 1회성 소비(Double-Spend) 방어 또는 5분 유효기간 만료<br>
+            • <strong>보안 정책</strong>: 매직 토큰은 1회 사용 즉시 DB에서 원자적으로 영구 삭제됩니다.
+        </div>
+        <a href="/guide" class="action-btn">온보딩 가이드로 이동</a>
+    </div>
+</body>
+</html>

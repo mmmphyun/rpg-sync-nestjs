@@ -59,30 +59,35 @@ export class AuthService {
     await queryRunner.startTransaction('READ COMMITTED');
 
     try {
-      // 1. 비관적 쓰기 락(pessimistic_write: SELECT ... FOR UPDATE)을 통한 동시성 경합 차단
+      // 1. magic_tokens 행에만 비관적 쓰기 락 획득 (PostgreSQL의 LEFT JOIN outer join lock 에러 방어)
       const magicToken = await queryRunner.manager.findOne(MagicToken, {
         where: {
           token,
           expiresAt: MoreThan(new Date()),
         },
-        relations: {
-          user: {
-            job: true,
-          },
-        },
         lock: { mode: 'pessimistic_write' },
       });
 
-      if (!magicToken || !magicToken.user) {
+      if (!magicToken) {
         await queryRunner.rollbackTransaction();
         this.logger.warn(`[AuthService] 유효하지 않거나 만료된 매직 토큰 검증 실패: ${token}`);
         return null;
       }
 
-      const user = magicToken.user;
-
-      // 2. 동일 트랜잭션 내 즉시 삭제하여 1회성 보장
+      // 2. 동일 트랜잭션 내 즉시 삭제하여 1회성 소비(Double-Spend) 보장
       await queryRunner.manager.delete(MagicToken, { token });
+
+      // 3. 유저 및 직업 정보 조회
+      const user = await queryRunner.manager.findOne(User, {
+        where: { discordId: magicToken.discordId },
+        relations: { job: true },
+      });
+
+      if (!user) {
+        await queryRunner.rollbackTransaction();
+        return null;
+      }
+
       await queryRunner.commitTransaction();
 
       this.logger.log(`[AuthService] 매직 토큰 정상 소비 완료 (discordId: ${user.discordId})`);

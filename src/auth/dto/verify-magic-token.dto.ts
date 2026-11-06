@@ -10,5 +10,15 @@ export class VerifyMagicTokenDto {
 
   @IsString()
   @IsOptional()
-  redirectTo?: string = 'main';
+  redirectTo?: string;
+
+  // 기존 HTML 폼(login.html)의 name="redirect_to" 완벽 호환
+  @IsString()
+  @IsOptional()
+  redirect_to?: string;
+
+  getTargetUrl(): string {
+    const target = this.redirectTo || this.redirect_to || 'main';
+    return target === 'guide' ? '/guide' : '/';
+  }
 }

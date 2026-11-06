@@ -22,7 +22,10 @@ export class ViewController {
   }
 
   @Get()
-  root(@Res() res: Response) {
+  root(@Query('error') error: string | undefined, @Res() res: Response) {
+    if (error === 'invalid_token') {
+      return res.render('auth-error.html');
+    }
     return res.redirect('/guide');
   }
 }

@@ -122,14 +122,16 @@ describe('AuthService (Unit Test)', () => {
 
   describe('verifyAndConsumeMagicToken (트랜잭션 및 원자적 소비)', () => {
     it('유효한 토큰일 경우 비관적 락으로 조회 후 즉시 삭제하고 유저 세션을 반환한다', async () => {
-      mockQueryRunner.manager.findOne.mockResolvedValue(mockMagicToken);
+      mockQueryRunner.manager.findOne
+        .mockResolvedValueOnce(mockMagicToken) // 1. magic_tokens 비관적 락 조회
+        .mockResolvedValueOnce(mockUser); // 2. users 조회
       mockQueryRunner.manager.delete.mockResolvedValue({ affected: 1 });
 
       const result = await service.verifyAndConsumeMagicToken(mockMagicToken.token);
 
       expect(mockDataSource.createQueryRunner).toHaveBeenCalledTimes(1);
       expect(mockQueryRunner.startTransaction).toHaveBeenCalledWith('READ COMMITTED');
-      expect(mockQueryRunner.manager.findOne).toHaveBeenCalledTimes(1);
+      expect(mockQueryRunner.manager.findOne).toHaveBeenCalledTimes(2);
       expect(mockQueryRunner.manager.delete).toHaveBeenCalledWith(MagicToken, { token: mockMagicToken.token });
       expect(mockQueryRunner.commitTransaction).toHaveBeenCalledTimes(1);
       expect(mockQueryRunner.release).toHaveBeenCalledTimes(1);
