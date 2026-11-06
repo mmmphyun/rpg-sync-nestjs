@@ -261,6 +261,46 @@ $ npm run test:e2e
 4. **온보딩 2차 방어 및 Redis 발행**: `POST /auth/complete` 호출 시 첫 요청은 DB 갱신 및 `onboarding:complete` 이벤트 발행 성공, 동일 세션 재요청 시 `400 Bad Request("이미 가이드 서약이 완료된 정식 멤버입니다.")`로 중복 차단.
 5. **세션 파기**: `POST /auth/logout` 호출 시 세션 쿠키 무효화 헤더 정상 반환.
 
+### 5.3 로컬 브라우저 & Docker E2E 실측 로그 증거 (Show, Don't Tell)
+실제 로컬 Docker Compose 환경(`rpg-sync-app`, `rpg-sync-pg`, `rpg-sync-redis`)에서 브라우저를 통한 실제 온보딩 서약 완료 및 Redis Pub/Sub 이벤트 발행을 수행하고 실측한 인프라 로그 증거입니다.
+
+#### 1. 백엔드 애플리케이션 수명주기 실측 로그 (`docker logs rpg-sync-app`)
+```text
+[Nest] 1  - 11/06/2026, 5:10:29 AM     LOG [RedisService] Redis 연결 성공 (redis:6379)
+[Nest] 1  - 11/06/2026, 5:10:29 AM     LOG [NestApplication] Nest application successfully started +8ms
+[Bootstrap] RPG Sync NestJS Auth Service running on http://localhost:3000
+[Bootstrap] Onboarding Guide UI: http://localhost:3000/guide
+
+# Step 1: 5분 일회용 매직 토큰 발급
+[Nest] 1  - 11/06/2026, 5:10:42 AM     LOG [AuthService] 일회용 매직 토큰 발급 완료 (discordId: 123456789012345678)
+
+# Step 2: 브라우저 매직 링크 접속 -> TypeORM 비관적 락 트랜잭션 내 원자적 소비 (DELETE)
+[Nest] 1  - 11/06/2026, 5:12:59 AM     LOG [AuthService] 매직 토큰 정상 소비 완료 (discordId: 123456789012345678)
+
+# Step 3: 브라우저 가이드 6개 탭 열람 및 타이핑 서약 완료 -> Redis Pub/Sub 채널 실시간 발행
+[Nest] 1  - 11/06/2026, 5:13:17 AM     LOG [RedisService] 이벤트 발행 성공 [onboarding:complete] -> 구독자 0명
+```
+
+#### 2. PostgreSQL DB 상태 갱신 실측 증거 (`docker exec rpg-sync-pg psql`)
+```sql
+-- 온보딩 완료 시점(05:13:17)과 일치하는 DB 플래그 실측 확인
+SELECT discord_id, nickname, is_guide_completed, updated_at 
+FROM users WHERE discord_id = '123456789012345678';
+
+     discord_id     | nickname  | is_guide_completed |         updated_at         
+--------------------+-----------+--------------------+----------------------------
+ 123456789012345678 | User_5678 | t                  | 2026-11-06 05:13:17.935015
+(1 row)
+
+-- 1회성 소비(Double-Spend) 원천 차단: 소비된 매직 토큰의 DB 즉시 삭제 실측 확인
+SELECT token, expires_at FROM magic_tokens 
+WHERE token = '4iHKU98w-JCIryLJm7iR0pt_g1Wt6Pk21gV-dQ9y4P0';
+
+ token | expires_at 
+-------+------------
+(0 rows)
+```
+
 ---
 
 ## 6. 결론: 핵심 아키텍처 전환 요약
