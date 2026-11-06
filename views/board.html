@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}{{ "공지사항" if board_type == "notice" else "이벤트" }} - RPG Sync Wiki{% endblock %}
+
+{% block og_description %}RPG 서버의 공지사항과 정기 이벤트를 확인해보세요!{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/board.css?v={{ get_mtime('board.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="header-blur-backdrop"></div>
+<div class="bg-glow"></div>
+<div class="content-container">
+
+    <div class="editorial-header">
+        <div class="editorial-title-container">
+            <span class="sub-title-mono">RPG SYNC ARCHIVE</span>
+            <h1 class="main-title">{{ "NOTICE" if board_type == "notice" else "EVENT" }}</h1>
+        </div>
+        <div class="editorial-meta-line">
+            <span>EST. 2026</span>
+            <span>INDEX // {{ "BOARD_NOTICE" if board_type == "notice" else "BOARD_EVENT" }}</span>
+        </div>
+    </div>
+
+    {% if board_type == "notice" %}
+    <div class="filter-bar" style="margin-top: 20px; margin-bottom: 40px; flex-shrink: 0;">
+        <span class="filter-label">태그</span>
+        <button class="filter-btn tag-btn active" data-tag="">전체 보기</button>
+        <button class="filter-btn tag-btn" data-tag="일반 공지">일반 공지</button>
+        <button class="filter-btn tag-btn" data-tag="직업 공지">직업 공지</button>
+        <button class="filter-btn tag-btn" data-tag="서버 상태 공지">서버 상태 공지</button>
+        <button class="filter-btn tag-btn" data-tag="시스템 공지">시스템 공지</button>
+        <button class="filter-btn tag-btn" data-tag="업데이트">업데이트</button>
+    </div>
+    {% else %}
+    <div style="height: 40px; flex-shrink: 0;"></div>
+    {% endif %}
+
+    <div id="feedArea" style="display: flex; flex-direction: column; gap: 20px;">
+        <!-- board.js 렌더링 영역 -->
+    </div>
+
+    <div id="paginationArea" style="display: flex; justify-content: center; gap: 8px; margin-top: 30px; padding-bottom: 40px;">
+        <!-- pagination 렌더링 영역 -->
+    </div>
+
+</div>
+
+<!-- 이미지 라이트박스 -->
+<div class="modal-overlay" id="lightbox" onclick="this.classList.remove('open')">
+    <img src="" alt="" style="max-width: 90%; max-height: 90%; border-radius: 0px; box-shadow: 0 0 30px rgba(0,0,0,0.8);">
+</div>
+
+<!-- 태그 변경 모달 -->
+<div class="modal-overlay" id="tagModal">
+    <div class="widget" style="width: 320px; padding: 20px; border-color: rgba(0, 242, 254, 0.3); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8); border-radius: 0px;">
+        <h3 style="color: var(--text-main); margin-bottom: 15px; font-size: 1.1rem; font-family: 'Jura', sans-serif;">태그 변경</h3>
+        <select id="newTagSelect" style="width: 100%; padding: 10px; margin-bottom: 20px; background: rgba(11, 12, 26, 0.8); color: #fff; border: 1px solid var(--border-color); border-radius: 0px; font-size: 0.9rem; outline: none;">
+            <option value="일반 공지">일반 공지</option>
+            <option value="직업 공지">직업 공지</option>
+            <option value="서버 상태 공지">서버 상태 공지</option>
+            <option value="시스템 공지">시스템 공지</option>
+            <option value="업데이트">업데이트</option>
+        </select>
+        <div style="display: flex; justify-content: flex-end; gap: 10px;">
+            <button onclick="closeTagModal()" style="padding: 8px 16px; background: rgba(255,255,255,0.1); color: var(--text-main); border: none; border-radius: 0px; cursor: pointer;">취소</button>
+            <button onclick="submitTagChange()" style="padding: 8px 16px; background: rgba(0, 242, 254, 0.1); color: var(--accent-hero); border: 1px solid var(--accent-hero); border-radius: 0px; cursor: pointer; font-weight: bold;">변경 적용</button>
+        </div>
+    </div>
+</div>
+
+<!-- 제목 수정 모달 -->
+<div class="modal-overlay" id="titleModal">
+    <div class="widget" style="width: 350px; padding: 20px; border-color: rgba(243, 156, 18, 0.3); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8); border-radius: 0px;">
+        <h3 style="color: var(--text-main); margin-bottom: 15px; font-size: 1.1rem; font-family: 'Jura', sans-serif;">제목 수정</h3>
+        <input type="text" id="newTitleInput" placeholder="제목 입력 (비워두면 자동 요약)" style="width: 100%; padding: 10px; margin-bottom: 20px; background: rgba(11, 12, 26, 0.8); color: #fff; border: 1px solid var(--border-color); border-radius: 0px; box-sizing: border-box; outline: none;">
+        <div style="display: flex; justify-content: flex-end; gap: 10px;">
+            <button onclick="closeTitleModal()" style="padding: 8px 16px; background: rgba(255,255,255,0.1); color: var(--text-main); border: none; border-radius: 0px; cursor: pointer;">취소</button>
+            <button onclick="submitTitleChange()" style="padding: 8px 16px; background: rgba(243, 156, 18, 0.1); color: #f39c12; border: 1px solid #f39c12; border-radius: 0px; cursor: pointer; font-weight: bold;">변경 적용</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.9/purify.min.js"></script>
+<script>
+    window.BOARD_TYPE = "{{ board_type }}";
+</script>
+<script src="/static/board.js?v={{ get_mtime('board.js') }}"></script>
+{% endblock %}

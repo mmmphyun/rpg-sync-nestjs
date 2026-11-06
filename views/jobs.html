@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}직업 종류 - RPG Sync Wiki{% endblock %}
+
+{% block og_description %}RPG 서버의 다양한 직업군 명세와 스킬 세부 정보를 확인해보세요!{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/jobs.css?v={{ get_mtime('jobs.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="header-blur-backdrop"></div>
+<div class="bg-glow"></div>
+<div class="content-container jobs-container">
+
+    <div class="editorial-header">
+        <div class="editorial-title-container">
+            <span class="sub-title-mono" id="jobCount">LOADING JOBS DATA...</span>
+            <h1 class="main-title">CLASSES</h1>
+        </div>
+        <div class="editorial-meta-line">
+            <span>EST. 2026</span>
+            <span>INDEX // CLASSIFICATION_SYSTEM</span>
+        </div>
+    </div>
+
+    <div class="filter-dashboard-mobile-toggle">
+        <button id="toggleFilterBtn" class="filter-toggle-btn">
+            <i class="fa-solid fa-sliders"></i> 정렬 및 필터
+        </button>
+    </div>
+
+    <div class="filter-dashboard collapsible collapsed" id="filterDashboard">
+        <div class="filter-group">
+            <span class="filter-label">정렬 기준</span>
+            <button class="filter-btn active" data-sort="range">사거리</button>
+            <button class="filter-btn" data-sort="position">포지션</button>
+            <button class="filter-btn" data-sort="resource">재화</button>
+            <button class="filter-btn" data-sort="gate">게이트</button>
+        </div>
+        
+        <div class="filter-group">
+            <span class="filter-label">필터</span>
+            <button class="filter-btn tag-filter" data-key="range" data-val="근거리">근거리</button>
+            <button class="filter-btn tag-filter" data-key="range" data-val="원거리">원거리</button>
+            <div class="filter-sep"></div>
+            <button class="filter-btn tag-filter" data-key="position" data-val="탱">탱</button>
+            <button class="filter-btn tag-filter" data-key="position" data-val="물리">물리</button>
+            <button class="filter-btn tag-filter" data-key="position" data-val="마법">마법</button>
+            <button class="filter-btn tag-filter" data-key="position" data-val="혼합">혼합</button>
+            <button class="filter-btn tag-filter" data-key="position" data-val="힐">힐</button>
+            <button class="filter-btn tag-filter" data-key="position" data-val="유틸">유틸</button>
+            <div class="filter-sep"></div>
+            <button class="filter-btn tag-filter type-hero" data-key="type" data-val="영웅">영웅</button>
+            <button class="filter-btn tag-filter type-villain" data-key="type" data-val="빌런">빌런</button>
+        </div>
+
+        <div class="search-group">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="searchInput" class="search-input" placeholder="직업명 검색...">
+        </div>
+    </div>
+
+    <div class="main-workspace">
+        <div class="grid-area inner-scroll" id="app"></div>
+        
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-inner" id="sidebarContent"></div>
+        </div>
+    </div>
+
+</div>
+
+<!-- 리뷰 팝업 -->
+<div class="modal-overlay hidden" id="reviewModal">
+    <div class="widget review-widget-modal">
+        <div class="modal-header">
+            <h3 id="reviewModalTitle">직업 평가</h3>
+            <button class="modal-close" onclick="closeReviewModal()">&times;</button>
+        </div>
+        <div class="review-list inner-scroll" id="reviewList"></div>
+        <div class="review-form-area" id="reviewFormArea">
+            <div class="review-auth-blocker" id="reviewAuthBlocker">
+                평가를 작성하려면 로그인이 필요합니다.
+            </div>
+            <form id="reviewForm" onsubmit="submitReview(event)" style="display: none;">
+                <div class="rating-select">
+                    <label>별점: </label>
+                    <select id="reviewRating">
+                        <option value="5">5점</option><option value="4">4점</option><option value="3">3점</option><option value="2">2점</option><option value="1">1점</option>
+                    </select>
+                </div>
+                <textarea id="reviewComment" placeholder="한줄평을 남겨주세요 (최대 255자)" maxlength="255" required></textarea>
+                <div class="review-notice">※ 이미 평가를 남기셨다면 새로운 내용으로 수정됩니다.</div>
+                <button type="submit" class="review-submit-btn">작성 완료</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    window.INITIAL_JOBS_DATA = {{ jobs_data | tojson }};
+</script>
+<script src="/static/main.js?v={{ get_mtime('main.js') }}"></script>
+{% endblock %}

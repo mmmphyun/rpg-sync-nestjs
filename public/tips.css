@@ -1,0 +1,252 @@
+/* =========================================
+   Tips & Forum Page Styles
+   ========================================= */
+body {
+    overflow-y: auto !important;
+    height: auto !important;
+    min-height: 100vh !important;
+}
+
+.global-header {
+    position: sticky !important;
+    top: 0;
+}
+
+.header-blur-backdrop {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 80px;
+    z-index: 990;
+    pointer-events: none;
+
+    background: linear-gradient(to bottom, var(--bg-widget-dark) 0%, var(--bg-widget-medium) 50%, transparent 100%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+}
+
+.tips-container {
+    max-width: 900px; width: 100%; margin: 0 auto;
+    padding: 40px 20px;
+    position: relative; box-sizing: border-box;
+}
+
+/* =========================================
+   PREMIUM EDITORIAL HEADER SYSTEM
+   ========================================= */
+.editorial-header {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+    margin-top: 100px;
+}
+
+.editorial-header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+}
+
+.editorial-title-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.sub-title-mono {
+    font-family: 'Space Mono', 'Courier New', Courier, monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    color: var(--accent-hero);
+    font-weight: 500;
+}
+
+.main-title {
+    font-family: 'Jura', sans-serif;
+    font-size: 2.8rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+    color: var(--text-main);
+    margin: 0;
+}
+
+.editorial-meta-line {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Space Mono', 'Courier New', Courier, monospace;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: 16px;
+    letter-spacing: 0.1em;
+    border-top: 1px solid var(--border-faint);
+    padding-top: 8px;
+}
+
+.editorial-write-btn {
+    align-self: flex-end;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+}
+
+/* -----------------------------------------
+   Auth Overlay (블러 및 안내문)
+   ----------------------------------------- */
+.blur-content { filter: blur(8px); pointer-events: none; user-select: none; opacity: 0.6; }
+
+.auth-overlay {
+    position: absolute; top: 280px; left: 0; right: 0;
+    display: flex; justify-content: center; align-items: center;
+    z-index: 50;
+}
+.auth-card {
+    background: var(--bg-widget-dark); border: 1px solid var(--border-color);
+    padding: 40px; border-radius: 0px; text-align: center;
+    box-shadow: none;
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+}
+.auth-card .overlay-icon { font-size: 3rem; color: var(--accent-villain); margin-bottom: 15px; display: block; }
+.auth-card h2 { color: var(--text-main); margin-bottom: 10px; font-weight: 700; }
+.auth-card p { color: var(--text-muted); margin-bottom: 25px; font-size: 0.9rem; }
+.btn-discord {
+    display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px;
+    background: #5865F2; color: #fff; border-radius: 0px; font-weight: bold;
+    text-decoration: none; transition: background 0.2s;
+}
+.btn-discord:hover { background: #4752C4; }
+
+/* -----------------------------------------
+   Filter Bar
+   ----------------------------------------- */
+.filter-bar {
+    display: flex; gap: 10px; margin-bottom: 25px; border-bottom: 1px solid var(--border-color);
+    padding-bottom: 15px;
+}
+.tag-btn {
+    background: transparent; color: var(--text-muted); border: 1px solid var(--border-color);
+    padding: 6px 16px; border-radius: 0px; cursor: pointer; transition: all 0.2s;
+    font-family: 'Space Mono', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 0.8rem;
+}
+.tag-btn:hover { border-color: var(--text-muted); color: var(--text-main); }
+.tag-btn.active {
+    background: color-mix(in srgb, var(--accent-hero) 8%, transparent);
+    color: var(--accent-hero); border-color: var(--accent-hero);
+}
+
+/* -----------------------------------------
+   Accordion Feed (Tip Cards)
+   ========================================= */
+.feed-area { display: flex; flex-direction: column; gap: 12px; }
+.empty-msg { text-align: center; color: var(--text-muted); padding: 40px 0; font-family: 'Space Mono', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 0.9rem; }
+
+.tip-card {
+    width: 100%; box-sizing: border-box;
+    background: var(--bg-surface); border: 1px solid var(--border-color);
+    border-radius: 0px; overflow: hidden; transition: border-color 0.2s;
+}
+.tip-card:hover { border-color: var(--border-light); }
+.tip-card.open { border-color: var(--accent-hero); }
+
+.tip-header {
+    padding: 16px 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+    background: var(--bg-widget-medium); transition: background 0.2s;
+}
+.tip-header:hover { background: var(--bg-widget-light); }
+
+.tip-meta { flex-grow: 1; display: flex; flex-direction: column; gap: 6px; }
+.tip-title { color: var(--text-main); font-size: 1.05rem; word-break: break-all; white-space: normal; font-weight: 700; }
+.tip-info { display: flex; gap: 12px; font-size: 0.8rem; font-family: 'Space Mono', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+.tip-info .author { color: var(--accent-hero); font-weight: bold; }
+.tip-info .date { color: var(--text-muted); }
+
+/* Control Buttons */
+.tip-controls { display: flex; gap: 12px; align-items: center; }
+.text-btn { background: none; border: none; cursor: pointer; font-family: 'Space Mono', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 0.8rem; font-weight: bold; transition: color 0.2s; }
+.text-btn.edit { color: var(--accent-info); }
+.text-btn.edit:hover { color: #5dade2; }
+.text-btn.delete { color: var(--accent-villain); }
+.text-btn.delete:hover { color: #ff6b6b; }
+.text-btn.delete.sm { font-size: 0.75rem; margin-left: 8px; }
+
+/* -----------------------------------------
+   Markdown Body Formatting (통일화)
+   ----------------------------------------- */
+.tip-body {
+    width: 100%; box-sizing: border-box;
+    padding: 20px; border-top: 1px solid var(--border-color);
+    background: var(--bg-base);
+    word-break: break-word;
+}
+
+.tip-markdown { color: var(--text-main); line-height: 1.6; font-size: 0.9rem; }
+.tip-markdown h1, .tip-markdown h2, .tip-markdown h3 { color: var(--text-main); margin-top: 0; margin-bottom: 15px; font-weight: 700; }
+.tip-markdown p { margin-bottom: 15px; }
+.tip-markdown a { color: var(--accent-info); text-decoration: none; }
+.tip-markdown a:hover { text-decoration: underline; }
+.tip-markdown ul, .tip-markdown ol { margin-bottom: 15px; padding-left: 20px; color: var(--text-muted); }
+.tip-markdown blockquote {
+    border-left: 2px solid var(--text-main); margin: 0 0 15px 0; padding: 10px 15px;
+    background: var(--bg-surface); color: var(--text-muted); border-radius: 0px;
+}
+.tip-markdown code {
+    background: rgba(0,0,0,0.4); padding: 2px 6px; border-radius: 0px;
+    font-family: 'Space Mono', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 0.85rem; color: #e67e22; border: 1px solid var(--border-color);
+}
+.tip-markdown pre code {
+    display: block; padding: 15px; overflow-x: auto; color: var(--text-main); border: none;
+}
+
+/* YouTube Embed */
+.youtube-wrapper { position: relative; padding-bottom: 56.25%; height: 0; margin-top: 15px; border-radius: 0px; overflow: hidden; }
+.youtube-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+/* -----------------------------------------
+   Comments Section
+   ----------------------------------------- */
+.comment-section { margin-top: 25px; padding-top: 20px; border-top: 1px dashed var(--border-color); }
+.empty-comment { color: var(--text-muted); font-size: 0.8rem; margin-bottom: 15px; font-family: 'Space Mono', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+.comment-item { margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px dotted var(--border-faint); }
+.comment-item:last-child { border-bottom: none; }
+.comment-meta { display: flex; justify-content: space-between; margin-bottom: 6px; font-family: 'Space Mono', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 0.75rem; }
+.comment-meta .author { color: var(--accent-hero); font-weight: bold; }
+.comment-meta .date { color: var(--text-muted); }
+.comment-content { color: var(--text-main); font-size: 0.85rem; }
+
+.comment-input-area { display: flex; gap: 10px; margin-top: 15px; }
+
+/* -----------------------------------------
+   Form Inputs & Buttons (Write Modal & Comments)
+   ----------------------------------------- */
+.form-input {
+    background: var(--bg-base); color: var(--text-main); border: 1px solid var(--border-color);
+    padding: 8px 12px; border-radius: 0px; outline: none; font-family: inherit; transition: border-color 0.2s;
+    font-size: 0.85rem;
+}
+.form-input:focus { border-color: var(--accent-hero); }
+.flex-grow { flex-grow: 1; }
+.row { display: flex; gap: 10px; margin-bottom: 15px; }
+
+.btn-primary {
+    background: color-mix(in srgb, var(--accent-hero) 8%, transparent); color: var(--accent-hero);
+    border: 1px solid var(--accent-hero); padding: 8px 16px; border-radius: 0px; font-weight: bold; cursor: pointer; transition: all 0.2s;
+}
+.btn-primary:hover { background: var(--accent-hero); color: #000; }
+
+.btn-secondary {
+    background: var(--bg-surface); color: var(--text-muted); border: 1px solid var(--border-color);
+    padding: 8px 16px; border-radius: 0px; cursor: pointer; transition: all 0.2s;
+}
+.btn-secondary:hover { color: var(--text-main); border-color: var(--text-muted); }
+
+/* -----------------------------------------
+   Write Modal Specifics
+   ----------------------------------------- */
+.write-modal-content { width: 600px; max-width: 95vw; background: var(--bg-widget-dark); border: 1px solid var(--border-color); padding: 25px; border-radius: 0px; box-shadow: none; }
+.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.modal-header h3 { margin: 0; color: var(--text-main); font-weight: 700; font-size: 1.1rem; }
+.modal-close { background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer; transition: color 0.2s; }
+.modal-close:hover { color: var(--accent-villain); }
+.select-prefix { width: 100px; font-family: 'Space Mono', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 0.8rem; cursor: pointer; }
+.content-textarea { width: 100%; height: 250px; resize: vertical; margin-bottom: 20px; font-family: 'Space Mono', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 0.85rem; }
+.modal-actions { display: flex; justify-content: flex-end; gap: 10px; }

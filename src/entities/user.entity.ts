@@ -8,8 +8,8 @@ import {
   JoinColumn,
   OneToMany,
 } from 'typeorm';
-import { Job } from './job.entity.js';
-import { MagicToken } from './magic-token.entity.js';
+import type { Job } from './job.entity.js';
+import type { MagicToken } from './magic-token.entity.js';
 
 @Entity('users')
 export class User {
@@ -43,10 +43,10 @@ export class User {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt!: Date;
 
-  @ManyToOne(() => Job, { nullable: true, onDelete: 'SET NULL' })
+  @ManyToOne('Job', { nullable: true, onDelete: 'SET NULL' })
   @JoinColumn({ name: 'current_job_id' })
   job?: Job | null;
 
-  @OneToMany(() => MagicToken, (token) => token.user)
+  @OneToMany('MagicToken', 'user')
   magicTokens?: MagicToken[];
 }

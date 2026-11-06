@@ -1,0 +1,1350 @@
+/* =========================================
+   Guide Page Styles
+   ========================================= */
+body {
+    overflow-y: auto !important;
+    height: auto !important;
+    min-height: 100vh !important;
+}
+
+.global-header {
+    position: sticky !important;
+}
+
+.header-blur-backdrop {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 80px;
+    z-index: 990;
+    pointer-events: none;
+
+    background: linear-gradient(to bottom, var(--bg-widget-dark) 0%, var(--bg-widget-medium) 50%, transparent 100%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+}
+
+
+/* -----------------------------------------
+   Container & Header
+   ----------------------------------------- */
+.guide-container {
+    max-width: 900px; width: 100%; margin: 0 auto;
+    padding: 40px 20px 60px 20px;
+    box-sizing: border-box;
+}
+
+/* =========================================
+   PREMIUM EDITORIAL HEADER SYSTEM
+   ========================================= */
+.editorial-header {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+    margin-top: 100px;
+}
+
+.editorial-title-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.sub-title-mono {
+    font-family: 'Space Mono', 'Courier New', Courier, monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    color: var(--accent-hero);
+    font-weight: 500;
+}
+
+.main-title {
+    font-family: 'Jura', sans-serif;
+    font-size: 2.8rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+    color: var(--text-main);
+    margin: 0;
+}
+
+.editorial-meta-line {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Space Mono', 'Courier New', Courier, monospace;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: 16px;
+    letter-spacing: 0.1em;
+    border-top: 1px solid var(--border-faint);
+    padding-top: 8px;
+}
+
+/* -----------------------------------------
+   Guide Sections (Cards)
+   ----------------------------------------- */
+.guide-content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.guide-section {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 0px;
+    padding: 30px;
+    transition: border-color 0.2s ease;
+}
+
+.guide-section:hover {
+    border-color: var(--accent-hero);
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px dashed var(--border-color);
+}
+
+.section-header i {
+    font-size: 1.8rem;
+    color: var(--accent-hero);
+}
+
+.section-header h3 {
+    margin: 0;
+    color: var(--text-main);
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+/* -----------------------------------------
+   List Styling
+   ----------------------------------------- */
+.section-body ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.section-body ul li {
+    position: relative;
+    padding-left: 22px;
+    margin-bottom: 12px;
+    color: var(--text-main);
+    line-height: 1.6;
+    font-size: 0.9rem;
+}
+
+.section-body ul li:last-child {
+    margin-bottom: 0;
+}
+
+.section-body ul li::before {
+    content: '❯';
+    position: absolute;
+    left: 0;
+    top: 1px;
+    color: var(--accent-hero);
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.section-body .sub-list {
+    margin: 15px 0 20px 0;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-left: 2px solid var(--accent-info);
+    border-radius: 0px;
+    padding: 15px 20px;
+}
+
+.section-body .sub-list li {
+    color: var(--text-muted);
+}
+
+.section-body .sub-list li::before {
+    content: '-';
+    color: var(--text-muted);
+}
+
+.section-body .grid-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    padding: 15px 20px 5px 20px;
+}
+.section-body .grid-list li {
+    margin-bottom: 10px;
+}
+
+.section-body strong {
+    color: #FFFFFF;
+    font-weight: 700;
+}
+
+/* -----------------------------------------
+   Promise Checkbox & Complete Button
+   ----------------------------------------- */
+.guide-action-section {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 0px;
+    padding: 35px 30px;
+    margin-top: 30px;
+    text-align: center;
+    box-shadow: none;
+}
+
+.promise-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 24px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 0px;
+    border: 1px dashed var(--border-color);
+    margin-bottom: 30px;
+}
+
+.promise-instruction-box {
+    text-align: center;
+    width: 100%;
+}
+
+.promise-target-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+    line-height: 1.5;
+}
+
+.promise-target-label i {
+    color: var(--accent-special);
+    margin-right: 4px;
+}
+
+.promise-target-text {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--accent-special);
+    background: rgba(245, 158, 11, 0.04);
+    border: 1px solid rgba(245, 158, 11, 0.15);
+    padding: 12px 24px;
+    border-radius: 0px;
+    display: inline-block;
+    letter-spacing: 0.5px;
+    user-select: none;
+}
+
+.promise-input-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    opacity: 1;
+    max-height: 100px;
+    transition: opacity 0.4s ease, max-height 0.4s ease;
+    overflow: hidden;
+}
+
+.promise-input-wrapper.fade-out-input {
+    opacity: 0;
+    max-height: 0;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+}
+
+.promise-input {
+    width: 100%;
+    height: 44px;
+    background: rgba(22, 27, 34, 0.65);
+    border: 1px solid var(--border-color);
+    border-radius: 0px;
+    padding: 0 20px;
+    color: #FFFFFF;
+    font-size: 0.95rem;
+    outline: none;
+    text-align: center;
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+.promise-input:focus {
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(22, 27, 34, 0.85);
+}
+
+.promise-input.glow-active {
+    border-color: var(--accent-hero);
+    background: rgba(16, 185, 129, 0.02);
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+}
+
+.complete-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 40px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.4);
+    background: var(--border-color);
+    border: 1px solid var(--border-color);
+    border-radius: 0px;
+    cursor: not-allowed;
+    transition: all 0.2s ease;
+    box-shadow: none;
+    font-family: 'Space Mono', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+.complete-btn:not(:disabled),
+.complete-btn.glow-active {
+    color: #0d1117 !important;
+    background: var(--accent-hero) !important;
+    border-color: var(--accent-hero) !important;
+    cursor: pointer !important;
+}
+
+.complete-btn:not(:disabled):hover,
+.complete-btn.glow-active:hover {
+    background: var(--accent-hero) !important;
+    border-color: var(--accent-hero) !important;
+}
+
+.complete-btn i {
+    font-size: 1.1rem;
+}
+
+/* Modal styling overrides */
+#complete-modal .modal-content {
+    background: var(--bg-widget-dark);
+    border: 1px solid var(--border-color);
+    border-radius: 0px;
+    box-shadow: none;
+}
+
+/* =========================================
+   Task A: Status Info Box Design (Member & Guest)
+   ========================================= */
+.status-info-box {
+    background: var(--bg-widget-medium);
+    border: 1px solid var(--border-color);
+    border-radius: 0px !important; /* 0px 직선화 강제 */
+    padding: 40px 30px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.status-info-box i {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease, text-shadow 0.3s ease;
+}
+
+.status-info-box p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text-main);
+    margin-bottom: 25px;
+    font-family: 'Space Mono', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    letter-spacing: 0.5px;
+}
+
+/* 멤버 박스 전용 고도화 */
+.member-box {
+    border-left: 3px solid var(--accent-hero); /* 좌측 에메랄드 수직 바 */
+}
+
+.member-box i {
+    color: var(--accent-hero);
+    text-shadow: 0 0 15px var(--shadow-hero);
+}
+
+.member-box:hover {
+    border-color: var(--accent-hero);
+    box-shadow: inset 0 0 20px rgba(16, 185, 129, 0.05), 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.member-box:hover i {
+    transform: scale(1.1);
+    text-shadow: 0 0 25px var(--shadow-hero), 0 0 35px rgba(16, 185, 129, 0.4);
+}
+
+/* 게스트 박스 전용 고도화 */
+.guest-box {
+    border-left: 3px solid var(--accent-special); /* 좌측 엠버 골드 수직 바 */
+}
+
+.guest-box i {
+    color: var(--accent-special);
+    text-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
+}
+
+.guest-box:hover {
+    border-color: var(--accent-special);
+    box-shadow: inset 0 0 20px rgba(245, 158, 11, 0.03), 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.guest-box:hover i {
+    transform: scale(1.1);
+    text-shadow: 0 0 25px rgba(245, 158, 11, 0.5), 0 0 35px rgba(245, 158, 11, 0.3);
+}
+
+/* =========================================
+   Task B: Premium Buttons & Links
+   ========================================= */
+/* 게스트용 디스코드 버튼 */
+.discord-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 36px;
+    font-family: 'Space Mono', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    background: rgba(88, 101, 242, 0.06);
+    border: 1px solid rgba(88, 101, 242, 0.35);
+    border-radius: 0px !important;
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative;
+}
+
+.discord-btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(45deg, rgba(88, 101, 242, 0.15), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 0;
+}
+
+.discord-btn:hover {
+    background: rgba(88, 101, 242, 0.15);
+    border-color: #5865F2;
+    color: #FFFFFF;
+    box-shadow: 0 0 20px rgba(88, 101, 242, 0.35), inset 0 0 10px rgba(88, 101, 242, 0.2);
+    transform: translateY(-2px);
+}
+
+.discord-btn:hover::before {
+    opacity: 1;
+}
+
+.discord-btn:active {
+    transform: translateY(0);
+}
+
+/* 멤버용 돌아가기 링크 (editorial-underline 적용) */
+.return-link {
+    position: relative;
+    text-decoration: none !important;
+    display: inline-block;
+    font-family: 'Space Mono', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+    padding-bottom: 3px;
+}
+
+.return-link::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--accent-hero);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform;
+}
+
+.return-link:hover {
+    color: var(--accent-hero);
+}
+
+.return-link:hover::after {
+    transform: scaleX(1);
+}
+
+/* =========================================
+   Task C: Newbie Pledge Section Refinements
+   ========================================= */
+/* 서약 안내 박스 강화 */
+.promise-instruction-box {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+/* 서약 문구 박스 에디토리얼 스타일 */
+.promise-target-text {
+    font-family: 'Space Mono', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--accent-special);
+    background: rgba(245, 158, 11, 0.03) !important;
+    border: 1px solid rgba(245, 158, 11, 0.2) !important;
+    padding: 16px 28px !important;
+    margin-top: 15px;
+    border-radius: 0px !important;
+    display: inline-block;
+    letter-spacing: 0.5px;
+    box-shadow: inset 0 0 10px rgba(245, 158, 11, 0.05);
+    user-select: none !important;
+    pointer-events: none; /* 드래그 및 우클릭 복사 철저 차단 */
+}
+
+/* 입력창 포커스 및 글로우 효과 */
+.promise-input {
+    width: 100%;
+    height: 48px !important;
+    background: rgba(13, 17, 23, 0.7) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 0px !important;
+    padding: 0 24px !important;
+    color: #FFFFFF !important;
+    font-size: 0.95rem !important;
+    outline: none !important;
+    text-align: center !important;
+    font-weight: 700 !important;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5) !important;
+    letter-spacing: 0.5px;
+}
+
+.promise-input:focus {
+    border-color: rgba(245, 158, 11, 0.5) !important;
+    background: rgba(13, 17, 23, 0.9) !important;
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.15), inset 0 0 10px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* 일치 완료 시 입력창 */
+.promise-input.glow-active {
+    border-color: var(--accent-hero) !important;
+    background: rgba(16, 185, 129, 0.03) !important;
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.2), inset 0 0 10px rgba(0, 0, 0, 0.3) !important;
+    color: var(--accent-hero) !important;
+}
+
+/* 완료 버튼 고도화 */
+.complete-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 16px 48px !important;
+    font-size: 0.95rem !important;
+    font-weight: 700;
+    color: var(--text-muted) !important;
+    background: var(--bg-surface) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 0px !important;
+    cursor: not-allowed;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+    font-family: 'Space Mono', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.complete-btn:disabled {
+    opacity: 0.6;
+}
+
+/* 서약 완료 시 버튼 */
+.complete-btn:not(:disabled),
+.complete-btn.glow-active {
+    color: #0D1117 !important;
+    background: var(--accent-hero) !important;
+    border-color: var(--accent-hero) !important;
+    cursor: pointer !important;
+    box-shadow: 0 0 25px var(--shadow-hero) !important;
+    opacity: 1 !important;
+    animation: buttonPulse 2s infinite;
+}
+
+.complete-btn:not(:disabled):hover,
+.complete-btn.glow-active:hover {
+    background: #059669 !important; /* 약간 어두운 에메랄드 */
+    border-color: #059669 !important;
+    box-shadow: 0 0 35px rgba(16, 185, 129, 0.4) !important;
+    transform: translateY(-1px);
+}
+
+.complete-btn:not(:disabled):active,
+.complete-btn.glow-active:active {
+    transform: translateY(0);
+}
+
+/* 미세한 펄스 애니메이션 */
+@keyframes buttonPulse {
+    0% {
+        box-shadow: 0 0 20px rgba(16, 185, 129, 0.25);
+    }
+    50% {
+        box-shadow: 0 0 30px rgba(16, 185, 129, 0.45);
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(16, 185, 129, 0.25);
+    }
+}
+
+/* =========================================
+   Task D: Season 9 Tab System & Minecraft 9x6 Grid
+   ========================================= */
+
+/* 1. Guide Tab System Style */
+.guide-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 12px;
+    overflow-x: auto;
+    scrollbar-width: none; /* Firefox */
+}
+
+.guide-tabs::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+}
+
+.tab-btn {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    padding: 12px 22px;
+    font-family: 'Space Mono', 'Pretendard', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+    white-space: nowrap;
+    letter-spacing: 0.5px;
+}
+
+.tab-btn:hover {
+    color: var(--text-main);
+    border-color: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.tab-btn.active {
+    color: #0D1117 !important;
+    background: var(--accent-hero) !important;
+    border-color: var(--accent-hero) !important;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.35);
+}
+
+.tab-content {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.tab-content.active {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    opacity: 1;
+}
+
+/* 2. Minecraft 9x6 Grid Simulation Style */
+.inventory-container {
+    background: #090d13;
+    border: 1px solid var(--border-color);
+    padding: 24px;
+    margin: 25px 0;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+.inventory-title-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px dashed var(--border-faint);
+    padding-bottom: 10px;
+}
+
+.inventory-title {
+    font-family: 'Space Mono', 'Jura', sans-serif;
+    font-size: 0.85rem;
+    color: var(--accent-hero);
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    margin: 0;
+}
+
+.inventory-subtitle {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.inventory-grid-outer {
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
+    background: #0d1117;
+    border: 3px double #30363d;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.inventory-grid-inner {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 9 / 6; /* 9행 6열 마인크래프트 규격 유지 */
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    gap: 4px;
+    background: #8b8b8b; /* 클래식 마크 인벤 배경 투박한 질감 연출 */
+    padding: 4px;
+    box-sizing: border-box;
+    border: 2px solid #373737;
+    box-shadow: inset 3px 3px 10px rgba(0,0,0,0.8), inset -3px -3px 10px rgba(255,255,255,0.2);
+}
+
+.inventory-slot {
+    aspect-ratio: 1;
+    position: relative;
+    cursor: pointer;
+    box-sizing: border-box;
+    border: 2px solid #373737;
+    border-right-color: #FFF;
+    border-bottom-color: #FFF;
+    background-color: #8b8b8b;
+    box-shadow: inset 2px 2px 5px rgba(0,0,0,0.6);
+    background-image: url('/images/menu_screenshot.png');
+    background-size: 900% 600%; /* 9열 6행 전체 스프라이트 */
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    filter: grayscale(100%) brightness(35%) contrast(120%);
+    transition: filter 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
+}
+
+/* 호버 시 해당 슬롯만 컬러 및 빛 복원 */
+.inventory-slot:hover,
+.inventory-slot.active {
+    filter: grayscale(0%) brightness(100%) contrast(100%);
+    transform: scale(1.08);
+    z-index: 10;
+    border: 2px solid var(--accent-special);
+    box-shadow: 0 0 15px var(--accent-special), inset 2px 2px 5px rgba(0,0,0,0);
+}
+
+/* 공백 슬롯 처리 (인게임에서 실제로 없는 칸) */
+.inventory-slot.slot-empty {
+    cursor: default;
+    background-image: none !important;
+    filter: none !important;
+    background-color: #8b8b8b;
+}
+.inventory-slot.slot-empty:hover {
+    transform: none;
+    border: 2px solid #373737;
+    border-right-color: #FFF;
+    border-bottom-color: #FFF;
+    box-shadow: inset 2px 2px 5px rgba(0,0,0,0.6);
+}
+
+/* 3. Dynamic Detail Card Style */
+.menu-detail-card {
+    background: var(--bg-widget-medium);
+    border: 1px solid var(--border-color);
+    border-left: 3px solid var(--accent-info);
+    padding: 20px 24px;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.2);
+}
+
+.menu-detail-title {
+    font-size: 1.05rem;
+    color: #FFFFFF;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Space Mono', 'Pretendard', sans-serif;
+}
+
+.menu-detail-title span.badge-mono {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border-color);
+    padding: 2px 8px;
+    color: var(--text-muted);
+}
+
+.menu-detail-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* 모바일 9열 격자 뷰포트 스케일 및 터치 최적화 반응형 패치 */
+@media (max-width: 600px) {
+    .inventory-container {
+        padding: 12px;
+        gap: 10px;
+    }
+    
+    .inventory-grid-outer {
+        padding: 4px;
+        border-width: 2px;
+    }
+    
+    .inventory-grid-inner {
+        padding: 2px;
+        gap: 2px;
+    }
+    
+    .inventory-slot {
+        border-width: 1px;
+    }
+    
+    /* 모바일에서는 과도한 줌 인에 따른 오터치/오버랩 방지용 컴팩트 스케일링 */
+    .inventory-slot:hover,
+    .inventory-slot.active {
+        transform: scale(1.04);
+        box-shadow: 0 0 8px var(--accent-special);
+    }
+    
+    .menu-detail-card {
+        padding: 16px;
+        min-height: 80px;
+    }
+    
+    .menu-detail-title {
+        font-size: 0.95rem;
+    }
+}
+
+/* =========================================
+   Command & Config Custom Tab Styling
+   ========================================= */
+#tab-commands .command-group-container {
+    display: grid;
+    gap: 16px;
+    margin-top: 12px;
+}
+
+#tab-commands .command-block-wrapper {
+    background: var(--bg-card);
+    border: 1px solid var(--border-faint);
+    padding: 12px;
+    border-radius: 8px;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+/* 프리미엄 동적 호버 인터랙션 */
+#tab-commands .command-block-wrapper:hover {
+    border-color: rgba(16, 185, 129, 0.25);
+    transform: translateY(-2px);
+}
+
+#tab-commands .command-block-wrapper h4 {
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    /* h4 타이틀 메인 테마 에메랄드/민트로 색상 일괄 통일 */
+    color: var(--accent-hero);
+}
+
+/* 프리미엄 고정폭/고해상도 코드 블록 스타일 */
+#tab-commands .command-code-block {
+    background: var(--bg-dark);
+    padding: 12px;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, 'Liberation Mono', 'Pretendard', sans-serif;
+    font-size: 0.85rem;
+    color: var(--text-main);
+    overflow-x: auto;
+    white-space: pre-wrap;
+    line-height: 1.6;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* 인라인 code 태그 폰트 개선 */
+#tab-commands code {
+    background: var(--bg-dark);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, 'Liberation Mono', 'Pretendard', sans-serif;
+    font-size: 0.85rem;
+    color: var(--text-main);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* =========================================
+   Leaflet Premium Dark Map Custom Styling
+   ========================================= */
+.leaflet-container {
+    background-color: var(--bg-dark) !important;
+    font-family: 'Pretendard', sans-serif !important;
+}
+
+/* 픽셀 아트 전용 이미지 렌더링 교정 (도트 강제 살리기) */
+#spawn-leaflet-map img.leaflet-image-layer {
+    image-rendering: pixelated !important;
+    image-rendering: crisp-edges !important;
+    -ms-interpolation-mode: nearest-neighbor !important;
+}
+
+/* 팝업 말풍선 다크 프리미엄화 */
+.leaflet-popup-content-wrapper {
+    background: var(--bg-surface) !important;
+    color: var(--text-main) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 6px !important;
+    box-shadow: 0 4px 12px var(--shadow-dark) !important;
+}
+
+.leaflet-popup-tip {
+    background: var(--bg-surface) !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+/* 줌 조절 버튼 프리미엄화 */
+.leaflet-bar {
+    border: 1px solid var(--border-color) !important;
+    box-shadow: none !important;
+}
+
+.leaflet-bar a {
+    background-color: var(--bg-surface) !important;
+    color: var(--text-main) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    transition: background 0.2s;
+}
+
+.leaflet-bar a:hover {
+    background-color: var(--border-color) !important;
+    color: var(--accent-hero) !important;
+}
+
+/* 에메랄드 펄스 애니메이션 핀 커스텀 스타일 (바깥쪽 포지셔닝 컨테이너) */
+.custom-map-pin {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* 내부 실제 핀 모양 및 펄스 링 (transform 충돌 예방 격리) */
+.pin-pulse-ring {
+    width: 12px;
+    height: 12px;
+    background: var(--accent-hero);
+    border: 2px solid #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+    animation: map-pulse 1.6s infinite;
+    box-sizing: border-box;
+}
+
+@keyframes map-pulse {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+    }
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+    }
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+    }
+}
+
+/* =========================================
+   6-Tab Grid Equalizer & Mobile Responsive
+   ========================================= */
+.guide-tabs {
+    display: grid !important;
+    grid-template-columns: repeat(6, 1fr) !important;
+    gap: 8px !important;
+    width: 100% !important;
+}
+
+.tab-btn {
+    width: 100% !important;
+    text-align: center !important;
+    padding: 10px 4px !important; /* 좁은 폭에서도 텍스트 안 잘리게 조정 */
+    font-size: 0.82rem !important; /* 900px 가로 한 줄 균형 핏 */
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+/* 모바일 뷰 최적화 반응형 가로 터치 스크롤 스위칭 */
+@media (max-width: 768px) {
+    .guide-tabs {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        gap: 6px !important;
+        padding-bottom: 8px !important;
+    }
+    
+    .tab-btn {
+        flex: 0 0 auto !important;
+        width: auto !important;
+        padding: 8px 16px !important;
+        font-size: 0.85rem !important;
+    }
+}
+
+/* =========================================
+   Skeleton Cards / Routine Styles
+   ========================================= */
+.skeleton-card {
+    background: rgba(13, 17, 23, 0.45) !important;
+    border: 1px dashed var(--border-color) !important;
+    padding: 24px !important;
+    margin-top: 24px !important;
+    position: relative !important;
+    overflow: hidden !important;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+    border-radius: 0px !important; /* 픽셀 테마 느낌을 위한 직각 유지 */
+}
+
+/* 그레이 아웃 및 픽셀 블러 글로우 효과를 위한 쉬머 효과 */
+.skeleton-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -150%;
+    width: 50%; height: 100%;
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.03) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: skewX(-25deg);
+    animation: shimmer 3.5s infinite;
+}
+
+@keyframes shimmer {
+    0% { left: -150%; }
+    50% { left: 150%; }
+    100% { left: 150%; }
+}
+
+.skeleton-card:hover {
+    border-style: solid !important;
+    border-color: rgba(255, 255, 255, 0.25) !important;
+    background: rgba(13, 17, 23, 0.65) !important;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.05) !important;
+}
+
+.skeleton-card.glow-emerald {
+    border-color: rgba(16, 185, 129, 0.3) !important;
+}
+.skeleton-card.glow-emerald:hover {
+    border-color: var(--accent-hero) !important;
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.15), inset 0 0 15px rgba(16, 185, 129, 0.05) !important;
+}
+
+.skeleton-card.glow-amber {
+    border-color: rgba(245, 158, 11, 0.3) !important;
+}
+.skeleton-card.glow-amber:hover {
+    border-color: var(--accent-special) !important;
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.15), inset 0 0 15px rgba(245, 158, 11, 0.05) !important;
+}
+
+.skeleton-card.glow-blue {
+    border-color: rgba(59, 130, 246, 0.3) !important;
+}
+.skeleton-card.glow-blue:hover {
+    border-color: var(--accent-info) !important;
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.15), inset 0 0 15px rgba(59, 130, 246, 0.05) !important;
+}
+
+/* =========================================
+   시즌 10 세계관/스토리 특화 콘텐츠 스타일
+   ========================================= */
+
+/* 1. 요약 영역 고유 레이아웃 */
+.story-teaser-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.story-season-badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent-special);
+    letter-spacing: 2px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.story-lead-quote {
+    font-size: 1.15rem;
+    color: #FFFFFF !important;
+    line-height: 1.6;
+    margin: 0 0 16px 0;
+    font-weight: 800;
+    border-left: 3px solid var(--accent-hero);
+    padding-left: 15px;
+}
+
+/* 2. 영웅 vs 빌런 2열 대립 카드 레이아웃 */
+.story-identity-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.identity-side {
+    display: flex;
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid var(--border-faint);
+    padding: 14px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.identity-side:hover {
+    border-color: var(--border-light);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.side-bar {
+    width: 3px;
+    align-self: stretch;
+    margin-right: 12px;
+}
+
+.hero-side .side-bar {
+    background: linear-gradient(to bottom, var(--accent-hero), #059669);
+    box-shadow: 0 0 10px var(--shadow-hero);
+}
+
+.villain-side .side-bar {
+    background: linear-gradient(to bottom, var(--accent-villain), #ef4444);
+    box-shadow: 0 0 10px var(--shadow-villain);
+}
+
+.side-content h5 {
+    margin: 0 0 4px 0;
+    font-size: 0.85rem;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+.hero-side .side-content h5 { color: var(--accent-hero); }
+.villain-side .side-content h5 { color: var(--accent-villain); }
+
+.side-content p {
+    margin: 0;
+    font-size: 0.78rem;
+}
+
+/* 3. 특화 강조 상자 */
+.story-highlight-desc {
+    background: rgba(16, 185, 129, 0.02);
+    border: 1px dashed var(--border-color);
+    padding: 16px 20px;
+    margin-bottom: 24px;
+}
+
+/* 4. 아카이브 전문보기 버튼 */
+.story-action-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.story-read-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    border: 1px solid var(--accent-hero);
+    color: var(--accent-hero);
+    padding: 12px 24px;
+    font-family: 'Space Mono', 'Pretendard', sans-serif;
+    font-size: 0.82rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.story-read-btn:hover {
+    background: var(--accent-hero);
+    color: var(--bg-base);
+    box-shadow: 0 0 20px var(--shadow-hero);
+    transform: translateY(-1px);
+}
+
+.story-read-btn:active {
+    transform: translateY(0);
+}
+
+/* 5. 스토리 전문 모달 세부 스타일 */
+.story-modal-content {
+    max-width: 650px !important;
+    text-align: left !important;
+    padding: 40px !important;
+    background: var(--bg-widget-dark) !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+.story-modal-body {
+    max-height: 55vh;
+    overflow-y: auto;
+    padding-right: 10px;
+    margin-bottom: 25px;
+}
+
+.story-modal-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.story-modal-body::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.story-modal-body::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+}
+
+.story-modal-body::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-hero);
+}
+
+.story-paragraph {
+    line-height: 1.8;
+    margin-bottom: 20px;
+    text-align: justify;
+    word-break: keep-all;
+}
+
+.story-paragraph strong {
+    color: #FFFFFF;
+}
+
+@media (max-width: 600px) {
+    .story-identity-box {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================================
+   Onboarding Rules Modal & Action Styles
+   ========================================= */
+
+
+.rules-modal-body {
+    max-height: 50vh;
+    overflow-y: auto;
+    padding-right: 10px;
+    margin-bottom: 25px;
+}
+
+.rules-modal-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.rules-modal-body::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.rules-modal-body::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+}
+
+.rules-modal-body::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-hero);
+}
+
+/* 테마 변수를 활용한 수칙 강조 색상 유틸리티 */
+.rules-theme-villain {
+    color: var(--accent-villain) !important;
+}
+
+.rules-theme-special {
+    color: var(--accent-special) !important;
+}
+
+.rules-theme-hero {
+    color: var(--accent-hero) !important;
+}
+
+.rules-confirm-btn {
+    width: 100%;
+    padding: 12px !important;
+    font-size: 0.85rem !important;
+    font-weight: bold !important;
+    font-family: 'Space Mono', 'Pretendard', sans-serif !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-muted) !important;
+    background: rgba(22, 27, 34, 0.5) !important;
+    opacity: 0.6;
+    cursor: not-allowed !important;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+}
+
+.rules-confirm-btn:not(:disabled),
+.rules-confirm-btn.glow-active {
+    border-color: var(--accent-hero) !important;
+    color: var(--accent-hero) !important;
+    background: rgba(16, 185, 129, 0.03) !important;
+    opacity: 1 !important;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.2) !important;
+    cursor: pointer !important;
+}
+
+.rules-confirm-btn:not(:disabled):hover,
+.rules-confirm-btn.glow-active:hover {
+    background: rgba(16, 185, 129, 0.08) !important;
+    box-shadow: 0 0 25px rgba(16, 185, 129, 0.35) !important;
+}

@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block title %}서버 가이드 - RPG Sync Wiki{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/guide.css?v=1.0.1">
+{% endblock %}
+
+{% block content %}
+<div class="page-guide viewport-container">
+    <div class="guide-container">
+
+        <!-- 페이지 타이틀 영역 -->
+        <div class="guide-page-header">
+            <h2 class="page-title">서버 가이드</h2>
+            <p class="page-desc">RPG 서버에 처음 오신 분들을 위한 핵심 안내서입니다.</p>
+        </div>
+
+        <div class="guide-content">
+
+            <!-- 1. 세계관 및 콘셉트 -->
+            <section class="guide-section">
+                <div class="section-header">
+                    <i class="ra ra-book"></i>
+                    <h3>세계관 및 스토리</h3>
+                </div>
+                <div class="section-body">
+                    <ul>
+                        <li><strong>"카틀리아는 여전히 전쟁 중입니다. 고대도시 로스트와 말이죠."</strong></li>
+                        <li>데미안의 거침없는 영토 확장으로 카틀리아는 큰 위협에 처했습니다. 악마에게 나라를 빼앗긴 로스트, 그리고 이제 카틀리아를 노리는 데미안.</li>
+                        <li>과거와 미래의 시간선을 잇고 공간도 비트는 <strong>'게이트'</strong>가 열리며 운명은 한 치 앞을 알 수 없게 되었습니다.</li>
+                        <li>전쟁에 대비해 아르카나와 연합을 맺은 카틀리아의 비밀요원이 되어 세계를 구할 영웅이 될 것인지, 새로운 시대를 열 악마가 될 것인지는 당신의 선택에 달려있습니다.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 2. 직업 및 장비 시스템 -->
+            <section class="guide-section">
+                <div class="section-header">
+                    <i class="ra ra-crossed-swords"></i>
+                    <h3>직업 및 파밍 시스템</h3>
+                </div>
+                <div class="section-body">
+                    <ul>
+                        <li><strong>85가지 이상의 다채로운 직업:</strong> 각 직업마다 특색 있는 전용 무기와 게이트의 힘을 활용한 독창적인 스킬이 존재합니다.</li>
+                        <li><strong>장비 및 무기 획득:</strong> 모든 무기와 장비는 몬스터 드랍을 통한 파밍으로 획득합니다.</li>
+                        <li>촘촘하게 짜인 시즌 8 스토리를 따라가며 숨겨진 떡밥을 풀면 캐릭터가 각성합니다. <strong>히든 루트</strong>를 타게 될 경우 사용하는 무기 타입이 완전히 뒤바뀔 수도 있습니다!</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 3. 성장 및 룬 시스템 -->
+            <section class="guide-section">
+                <div class="section-header">
+                    <i class="ra ra-gem-pendant"></i>
+                    <h3>성장 구조</h3>
+                </div>
+                <div class="section-body">
+                    <ul>
+                        <li>RPG 서버는 단순한 레벨업에 따른 자동 스탯 증가가 없으며, <strong>정해진 최종 레벨 또한 존재하지 않습니다.</strong></li>
+                        <li>오로지 <strong>장비 드랍 및 룬 시스템</strong>을 통해 스탯을 무한히 확장해 나가는 독창적인 성장 방식을 채택했습니다.</li>
+                    </ul>
+                    <ul class="sub-list">
+                        <li><strong>레벨 교환:</strong> 사냥을 통해 얻은 레벨을 소모하여 특수 아이템으로 교환합니다.</li>
+                        <li><strong>룬 뽑기:</strong> 획득한 특수 아이템을 사용해 스탯을 고정 수치(+) 또는 퍼센트(*)로 올려주는 '룬'을 뽑습니다.</li>
+                        <li>파밍한 무기와 뽑은 룬을 조합하여 자신만의 강력하고 유니크한 빌드를 완성하세요.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 4. 월드 구조 및 탐험 -->
+            <section class="guide-section">
+                <div class="section-header">
+                    <i class="ra ra-compass"></i>
+                    <h3>월드 및 맵 구조</h3>
+                </div>
+                <div class="section-body">
+                    <ul>
+                        <li>서버의 맵은 게이트나 던전을 직접 돌파하며 다음 마을로 전진하는 <strong>던전형 구조</strong>를 띄고 있습니다.</li>
+                    </ul>
+                    <ul class="sub-list">
+                        <li><strong>진행 순서:</strong> 죽음의 바다 ➔ 로스트 ➔ 카틀리아 ➔ 아르카나(예정)</li>
+                        <li>기본적으로 이전 맵으로 되돌아갈 수 없는 구조이나, <strong>카틀리아와 아르카나 구간만 상호 왕복이 가능</strong>하도록 설계되어 있습니다.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 5. 주요 콘텐츠 -->
+            <section class="guide-section">
+                <div class="section-header">
+                    <i class="ra ra-tower"></i>
+                    <h3>주요 콘텐츠</h3>
+                </div>
+                <div class="section-body">
+                    <ul>
+                        <li><strong>보스 레이드:</strong> 데미안의 야망을 막기 위해 다른 플레이어들과 협동하여 강력한 보스를 공략합니다.</li>
+                        <li><strong>MOBA 미니게임:</strong> 서버 내에 존재하는 직업들을 그대로 활용하여 즐기는 독특한 MOBA 장르의 미니게임 콘텐츠가 준비되어 있습니다.</li>
+                        <li><strong>생활 콘텐츠:</strong> 복잡한 내실 콘텐츠는 없으나 농사, 낚시, 야생 활동이 존재하며, 숙련도 레벨이 오르면 약간의 스탯 보너스를 얻을 수 있습니다.</li>
+                        <li><strong>길드전 (PVP):</strong> 유저 간 무분별한 PK 대신, 주기적으로 돌아오는 이벤트성 길드전을 통해 실력을 겨룰 수 있습니다.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 6. 서버 지향점 및 커뮤니티 -->
+            <section class="guide-section">
+                <div class="section-header">
+                    <i class="ra ra-double-team"></i>
+                    <h3>커뮤니티 및 지향점</h3>
+                </div>
+                <div class="section-body">
+                    <ul>
+                        <li><strong>성인 중심 매너 서버:</strong> 따뜻한 마음을 가진 사람들이 모여 편안하게 즐길 수 있는 커뮤니티를 지향합니다.</li>
+                        <li>정기적으로 개최되는 다양한 이벤트를 통해 특별한 보상과 풍성한 즐길거리를 제공합니다.</li>
+                        <li>과도한 경쟁보다는 서로 협동하고, 스토리의 주인공이 되어 새로운 친구들과 즐거운 시간을 공유해 보세요!</li>
+                    </ul>
+                </div>
+            </section>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

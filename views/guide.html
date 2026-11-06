@@ -1,0 +1,708 @@
+{% extends "base.html" %}
+
+{% block title %}서버 가이드 - RPG Sync Wiki{% endblock %}
+
+{% block og_description %}RPG 서버 마인크래프트 멀티플레이 접속을 위한 정식 안내 가이드입니다.{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/guide.css?v=1.0.2">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+{% endblock %}
+
+{% block content %}
+<div class="header-blur-backdrop"></div>
+<div class="bg-glow"></div>
+<div class="page-guide viewport-container">
+    <div class="guide-container">
+
+        <!-- 에디토리얼 헤더 영역 -->
+        <div class="editorial-header">
+            <div class="editorial-title-container">
+                <span class="sub-title-mono">USER ONBOARDING // HANDBOOK</span>
+                <h1 class="main-title">GUIDE</h1>
+            </div>
+            <div class="editorial-meta-line">
+                <span>EST. 2026</span>
+                <span>INDEX // RULES_AND_OVERVIEW</span>
+            </div>
+        </div>
+
+        <!-- 탭 네비게이션 시스템 탑재 -->
+        <div class="guide-tabs">
+            <button class="tab-btn active" data-tab="tab-wild">⚔️ 스토리 & 야생</button>
+            <button class="tab-btn" data-tab="tab-jobs">🍎 생활 직업</button>
+            <button class="tab-btn" data-tab="tab-economy">💎 경제 시스템</button>
+            <button class="tab-btn" data-tab="tab-routine">🎒 모험 루틴</button>
+            <button class="tab-btn" data-tab="tab-commands">⚙️ 설정 & 명령어</button>
+            <button class="tab-btn" data-tab="tab-system">🗺️ 스폰 & 메뉴</button>
+        </div>
+
+        <div class="guide-content">
+
+            <!-- Tab 1: 스토리 & 야생 -->
+            <div id="tab-wild" class="tab-content active">
+                <!-- 1-1. 세계관 -->
+                <section class="guide-section">
+                    <div class="section-header">
+                        <i class="ra ra-book"></i>
+                        <h3>시즌 세계관 및 스토리</h3>
+                    </div>
+                    <div class="section-body story-teaser-content">
+                        <span class="story-season-badge">SEASON 9 // THE TIME WANDERER</span>
+                        <h4 class="story-lead-quote">"최전방 '게이트 L'이 마족의 압도적인 진격 앞에 함락되던 날, 대륙의 시간은 찢어졌습니다."</h4>
+                        <p class="story-summary-text">
+                            금단의 '시간의 힘' 폭주가 가져온 30년 뒤의 미래. 동료들은 기억의 파편을 난도질당한 채 대륙 전역의 게이트로 뿔뿔이 흩어졌습니다. 자신이 누구인지, 왜 싸워야 하는지조차 잊어버린 채로.
+                        </p>
+                        <div class="story-identity-box">
+                            <div class="identity-side hero-side">
+                                <div class="side-bar"></div>
+                                <div class="side-content">
+                                    <h5>영웅 (HEROES)</h5>
+                                    <p>지워진 과거의 영광을 되찾을 각성자</p>
+                                </div>
+                            </div>
+                            <div class="identity-side villain-side">
+                                <div class="side-bar"></div>
+                                <div class="side-content">
+                                    <h5>빌런 (VILLAINS)</h5>
+                                    <p>혼돈의 시대에 부역할 또 다른 주인공</p>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="story-highlight-desc">
+                            <strong>"스토리 속 주인공들이 곧 당신의 직업입니다."</strong><br>
+                            과거의 단서들을 추적해 지워진 자신의 힘을 각성하고, 미처 완결하지 못했던 그날의 전쟁을 완결하십시오!
+                        </p>
+                        <div class="story-action-container">
+                            <button type="button" class="story-read-btn" id="story-read-trigger">
+                                <span>⚔️ 전쟁의 기록 전문 읽기</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 1-2. 초반 성장 가이드 (Red Team 핵심) -->
+                <section class="guide-section">
+                    <div class="section-header">
+                        <i class="fa-solid fa-signs-post"></i>
+                        <h3>초반 가이드</h3>
+                    </div>
+                    <div class="section-body">
+                        <ul>
+                            <li><strong>꼭 읽어주세요!</strong> 극초반 유저가 RPG 몬스터를 직접 처치하기에는 스펙이 턱없이 부족합니다.</li>
+                            <li>초반에는 <strong>반야생 구역</strong>에서 안전하게 내실을 다져야 합니다. 농사, 낚시, 광질을 통해 숙련도를 쌓고 재화를 벌어 기본적인 초반 장비를 장만하는 것을 강력히 추천드립니다!</li>
+                            <li>자원을 축적하고, 충분한 준비가 끝난 후에 차근차근 스토리 속으로 빠져들어봐요!</li>
+                            <li>10분마다 랜덤한 유저 근처에 생성되어 3분간 유지되는 야생 게이트를 사용해 친구와 함께 즐겨보세요.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- 1-3. 야생의 위험 요소 -->
+                <section class="guide-section">
+                    <div class="section-header">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        <h3>야생의 분노</h3>
+                    </div>
+                    <div class="section-body">
+                        <ul>
+                            <li><strong>오염지역 이벤트:</strong> 험난한 야생에서는 일정 확률로 오염지역 이벤트가 발동합니다. <strong>방독면</strong> 미착용 상태로 진입 시 치명적인 독 대미지와 허기 디버프를 받습니다.</li>
+                            <li><strong>네더 지역 하드코어:</strong> 네더 지역은 가치가 높은 자원을 파밍할 수 있지만, <strong>인벤토리 세이브가 적용되지 않습니다.</strong> 사망 시 모든 아이템을 소실할 수 있으니 조심하세요!</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- 1-4. 자연의 이로움 (핫타임) -->
+                <section class="guide-section">
+                    <div class="section-header">
+                        <i class="ra ra-sun"></i>
+                        <h3>야생의 자비</h3>
+                    </div>
+                    <div class="section-body">
+                        <ul>
+                            <li><strong>자연의 이로움:</strong> 랜덤으로 약 30분 동안 서버 전체 플레이어에게 적용되는 버프 이벤트입니다.</li>
+                            <li><strong>이벤트 효과:</strong>
+                                <br>- 사냥꾼의 시간: 몬스터 처치 시 전리품 2배 드롭.
+                                <br>- 광부의 시간: 광물 채취 시 전리품 2배 드롭.
+                                <br>- 농부의 시간: 작물 수확 시 수확물 2배 드롭 (호박 제외).
+                                <br>- 어부의 시간: 낚시 낚임 성공 및 획득 어획량 2배 증가.
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Tab 2: 생활 직업 -->
+            <div id="tab-jobs" class="tab-content">
+                <!-- 2-1. 생활직업 개요 -->
+                <section class="guide-section">
+                    <div class="section-header">
+                        <i class="ra ra-mining-diamonds"></i>
+                        <h3>생활 직업 vs RPG 직업</h3>
+                    </div>
+                    <div class="section-body">
+                        <ul>
+                            <li><strong>서로 다른 직업이에요!</strong> 서버에는 생존과 재화를 책임지는 <strong>'생활 직업'</strong>과, 보스전 및 레이드를 이끄는 <strong>'RPG 전투 직업'</strong>이 분리되어 존재합니다. 본 가이드에서는 초반 핵심인 생활 직업을 상세하게 다뤄볼게요. <br><em>(RPG 직업이 궁금하시다면? 위키의 직업설명 페이지를 참고해주세요!)</em></li>
+                            <li><strong>직업별 정원 제한:</strong> 각 직업마다 서버 내 동시 가입 정원이 한정되어 있습니다. 전직 가능 여부는 인게임에서 확인 가능합니다.</li>
+                            <li><strong>전직 필수 아이템:</strong> 생활 직업 전직 시에는 <strong>'용의 구슬'</strong>이 소모됩니다. 신중히 고민하세요!</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- 2-2. 7대 생활 직업 도감 -->
+                <section class="guide-section">
+                    <div class="section-header">
+                        <i class="ra ra-heavy-shield"></i>
+                        <h3>생활 직업 안내</h3>
+                    </div>
+                    <div class="section-body">
+                        <ul class="sub-list" style="border-left: 2px solid var(--accent-hero); margin-bottom: 20px;">
+                            <li><strong>⛏️ 광부:</strong> 지하 자원을 캐는 특화 직업. <br>└ <em>패시브:</em> 광석 채굴 시 <strong>20% 확률로 자원 1개 추가 드롭</strong>.</li>
+                            <li style="margin-top: 12px;"><strong>🌾 농부:</strong> 대지의 결실을 거두는 직업. <br>└ <em>패시브:</em> 작물 수확 시 <strong>20% 확률로 수확물 1개 추가 드롭</strong>.</li>
+                            <li style="margin-top: 12px;"><strong>🎣 어부:</strong> 강과 바다의 강태공 직업. <br>└ <em>패시브:</em> 낚시 성공 시 <strong>20% 확률로 획득 아이템 1개 추가 드롭</strong>.</li>
+                            <li style="margin-top: 12px;"><strong>🏹 사냥꾼:</strong> 야생의 몬스터와 동물을 포획하는 직업. <br>└ <em>패시브:</em> 몹/동물 처치 시 <strong>20% 확률로 보너스 현금 즉시 입금</strong>.</li>
+                            <li style="margin-top: 12px;"><strong>🍳 요리사:</strong> 맛있는 음식을 조리하는 직업. <br>└ <em>패시브:</em> 제작 음식 섭취 시 <strong>30% 확률로 강력한 재생 II 버프</strong> 발동.</li>
+                            <li style="margin-top: 12px;"><strong>🧪 연금술사:</strong> 신비로운 포션을 조제하는 직업. <br>└ <em>패시브:</em> 야생의 독가스 및 <strong>오염지역 독 대미지 50% 저항</strong>.</li>
+                            <li style="margin-top: 12px;"><strong>⚒️ 대장장이:</strong> 강력한 장비를 제련하는 직업. <br>└ <em>패시브:</em> 도구/장비 사용 시 <strong>25% 확률로 내구도 감소 무시</strong>.</li>
+                            <li style="margin-top: 12px;"><strong>🌿 채집가:</strong> 자연의 보물을 채집하는 직업. <br>└ <em>패시브:</em> 풀/나뭇잎 채집 시 <strong>20% 확률로 자원 1개 추가 드롭</strong>.</li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Tab 3: RPG 경제 & 부동산 -->
+            <div id="tab-economy" class="tab-content">
+                <!-- 3-1. 3대 핵심 재화 -->
+                <section class="guide-section">
+                    <div class="section-header">
+                        <i class="ra ra-gold-bar"></i>
+                        <h3>서버 화폐 체계</h3>
+                    </div>
+                    <div class="section-body">
+                        <ul>
+                            <li><strong>💵 현금:</strong> 서버의 근본 인게임 화폐입니다. 생활 자원 판매, 일일 퀘스트, 출석 보상, RPG 몬스터 사냥으로 수급하며 소모품 구매 및 플레이어간 장비 거래 등에 범용적으로 사용됩니다.</li>
+                            <li><strong>🎟️ 출석 코인:</strong> 매일 출석 체크와 추첨권으로 획득할 수 있습니다! <strong>가방 확장권</strong> 등 특수 아이템으로 교환 하거나 <strong>이벤트 아이템</strong> 교환에 사용되므로 초반 낭비는 금물입니다.</li>
+                            <li><strong>📈 RPG 코인:</strong> 가상 코인 시뮬레이션 시스템입니다. 약 5분 주기로 변동되는 정기 시세와 랜덤 호재/악재 이벤트로 드라마틱한 등락을 제공합니다. 판매 시 소량의 수수료 차감 후 현금으로 지급됩니다.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- 3-2. 개인 영토 분양 -->
+                <section class="guide-section">
+                    <div class="section-header">
+                        <i class="ra ra-pine-tree"></i>
+                        <h3>개인 땅 분양</h3>
+                    </div>
+                    <div class="section-body">
+                        <ul>
+                            <li><strong>안전한 귀농 생활:</strong> 몬스터와 타인의 약탈 위협이 차단된 안전한 개인 땅을 현금으로 매입하여 영구 소유할 수 있습니다.</li>
+                            <li>큰 상자 최대 4개, 화로 최대 6개 설치 가능하며 동물은 최대 10마리 까지 키울 수 있습니다. 농사는 제한없이 가능해요!</li>
+                            <li>※ 야생에서 건축 또는 농사하다가 적발될 경우 <strong>경고</strong> 부여됩니다.</li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Tab 4: 모험 루틴 -->
+            <div id="tab-routine" class="tab-content">
+                <!-- 4-1. 혜택 -->
+                <section class="guide-section">
+                    <div class="section-header">
+                        <i class="ra ra-clover"></i>
+                        <h3>초반 모험 든든하게 시작하기</h3>
+                    </div>
+                    <div class="section-body">
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">
+                            서버에 처음 오신 모험가님을 위한 기초 혜택 안내드릴게요!
+                        </p>
+                        <ul class="sub-list" style="border-left: 2px solid var(--accent-success);">
+                            <li><strong>🎒 뉴비 기본 장비</strong>
+                                <br>└ <em>수령 방법:</em> 지급받은 기본템을 우클릭한 뒤, 초록색 색유리판을 클릭해서 모두 받아보세요!
+                            </li>
+                            <li style="margin-top: 12px;"><strong>💰 초반 지원 혜택</strong>
+                                <br>└ <em>쿠폰:</em> 혹시 홍보글에 숨겨진 쿠폰 번호를 찾으셨나요? 운이 좋으시네요!
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- 4-2. 일일 모험 권장 루틴 -->
+                <section class="guide-section">
+                    <div class="section-header">
+                        <i class="ra ra-clockwork"></i>
+                        <h3>시즌 9 매일 권장 플레이 루틴</h3>
+                    </div>
+                    <div class="section-body">
+                        <ul class="sub-list" style="border-left: 2px solid var(--accent-info);">
+                            <li><strong>1단계: 접속하자마자 출석 도장 꾹! 📅</strong>
+                                <br>└ <em>꿀팁:</em> 접속하자마자 SHIFT+F 메뉴에서 '출석'을 눌러 유용한 <strong>출석 코인</strong>을 무조건 챙겨가세요!
+                            </li>
+                            <li style="margin-top: 12px;"><strong>2단계: 짭짤한 보너스! 일일 퀘스트 미션 📝</strong>
+                                <br>└ <em>꿀팁:</em> 매일 00시에 초기화되는 3가지 미션이에요. 출석 코인 1개를 소모해 미션을 열고 클리어하면 엄청난 돈을 벌 수 있어요! 진행 중인 미션을 완료한 뒤 코인을 더 쓰면 남은 미션들도 연달아 클리어해 대박 수익을 올릴 수 있답니다.
+                            </li>
+                            <li style="margin-top: 12px;"><strong>3단계: 평화로운 야생 수확과 무역 🌾</strong>
+                                <br>└ <em>꿀팁:</em> 농사로 풍성하게 수확한 작물, 낚시로 건진 월척, 정성껏 캐낸 광물들을 모아 요리사/대장장이 유저들에게 판매해 보세요! 든든하게 지갑을 차곡차곡 불리는 쏠쏠한 재미가 있습니다.
+                            </li>
+                            <li style="margin-top: 12px;"><strong>4단계: 만반의 준비 끝! 본격 던전 모험 출발 ⚔️</strong>
+                                <br>└ <em>꿀팁:</em> 열심히 모은 자금으로 나에게 딱 맞는 튼튼한 초반 장비를 맞췄다면 이제 진짜 전장으로 갈 시간! 본격적인 스토리 속으로 뛰어들어봐요!
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Tab 5: 설정 & 명령어 -->
+            <div id="tab-commands" class="tab-content">
+                <!-- 5-1. 마인크래프트 권장 설정 안내 -->
+                <section class="guide-section">
+                    <div class="section-header">
+                        <i class="ra ra-gears"></i>
+                        <h3>눈과 손이 편해지는 권장 설정️</h3>
+                    </div>
+                    <div class="section-body">
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">
+                            서버를 200% 더 쾌적하게 즐기기 위한 마인크래프트 최적 세팅이에요! 처음 접속하셨다면 꼭 한번 체크해 보세요.
+                        </p>
+                        <ul class="sub-list" style="border-left: 2px solid var(--accent-info);">
+                            <li><strong>📺 비디오 설정 - GUI 비율: <code>2 ~ 3</code></strong>
+                                <br>└ <em>이유:</em> 너무 작거나 큰 UI는 눈을 피로하게 만들어요. 2~3으로 설정하면 서버 메뉴와 가이드가 가장 예쁘게 보인답니다!
+                            </li>
+                            <li style="margin-top: 12px;"><strong>☁️ 비디오 설정 - 구름: <code>꺼짐 (Off)</code></strong>
+                                <br>└ <em>이유:</em> 렉을 유발하는 주범 중 하나예요! 구름을 꺼두면 프레임이 훨씬 부드러워진답니다.
+                            </li>
+                            <li style="margin-top: 12px;"><strong>♿ 접근성 설정 - 피해 흔들림: <code>최소화</code></strong>
+                                <br>└ <em>이유:</em> 몬스터에게 맞았을 때 화면이 과도하게 흔들리는 것을 방지해 줘요. 멀미 예방에 아주 꿀팁이랍니다!
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- 5-2. 유용한 채팅 명령어 목록 -->
+                <section class="guide-section" style="margin-top: 24px; padding-top: 24px;">
+                    <div class="section-header">
+                        <i class="ra ra-speech-bubble"></i>
+                        <h3>알아두면 든든한 채팅 명령어</h3>
+                    </div>
+                    <div class="section-body">
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">
+                            인게임 채팅창에 입력하여 사용할 수 있는 편리한 명령어 모음집이에요!
+                        </p>
+                        
+                        <div class="command-group-container">
+                            <!-- 유저상점 -->
+                            <div class="command-block-wrapper">
+                                <h4><i class="ra ra-gold-bar"></i> 유저상점</h4>
+                                <pre class="command-code-block">
+/유저상점 열기 : 유저 상점을 열어요!
+/유저상점 등록 &lt;가격&gt; : 손에 들고 있는 소중한 아이템을 상점에 올려요.
+/유저상점 보관함 : 판매 완료된 대금이나 팔리지 않은 템을 돌려받을 수 있어요!
+/유저상점 수수료확인 : 거래 시 발생하는 수수료가 궁금할 때 쳐보세요.</pre>
+                            </div>
+
+                            <!-- 칭호 -->
+                            <div class="command-block-wrapper">
+                                <h4><i class="ra ra-queen-crown"></i> 칭호</h4>
+                                <pre class="command-code-block">
+/칭호 목록 : 내가 획득한 예쁜 칭호들을 구경해요.
+/칭호 착용 [번호] : 뽐내고 싶은 멋진 칭호를 머리 위에 띄워보세요!
+/칭호 해제 : 잠시 칭호를 떼어놓고 싶을 때 사용해요.</pre>
+                            </div>
+
+                            <!-- 확성기 -->
+                            <div class="command-block-wrapper">
+                                <h4><i class="ra ra-microphone"></i> 확성기</h4>
+                                <pre class="command-code-block">
+/확성기 [하고싶은 말] : 온 서버 유저들에게 내 메시지를 크게 자랑해 보세요! (비용 5,000원, 재사용 대기시간 1분)</pre>
+                            </div>
+
+                            <!-- 파티 -->
+                            <div class="command-block-wrapper">
+                                <h4><i class="ra ra-double-team"></i> 파티</h4>
+                                <pre class="command-code-block">
+/파티 정보 : 같이 모험을 떠날 멋진 파티원들을 확인해요.
+/파티 초대 [닉네임] : 원하는 친구를 내 파티에 초대해요!
+/파티 수락 : 친구가 보낸 달콤한 파티 초대를 수락해요.
+/파티 탈퇴 : 파티에서 나와 혼자만의 시간을 가집니다.
+/파티 추방 [닉네임] : (파티장 전용) 함께하기 어려워진 파티원을 보냅니다.</pre>
+                            </div>
+
+                            <!-- 기타 편리한 명령어들 -->
+                            <div class="command-block-wrapper">
+                                <h4><i class="ra ra-compass"></i> 기타 유용한 명령어</h4>
+                                <pre class="command-code-block">
+/접속시간 &lt;닉네임&gt; : 나와 친구들의 누적 서버 접속 시간을 확인해 봐요.
+/귓 [닉네임] [내용] : 특정 친구와 속닥속닥 귓속말을 나눠요. (※ 띠링 효과음은 모두에게 들릴 수 있으니 장난 금지!)
+/장비확인 [닉네임] : 고수들은 어떤 강력한 무기를 쓰는지 장비창을 엿볼 수 있어요!</pre>
+                            </div>
+
+                            <!-- 경제 및 안전 -->
+                            <div class="command-block-wrapper">
+                                <h4><i class="ra ra-shield"></i> 거래 & 신고</h4>
+                                <pre class="command-code-block">
+/pay [닉네임] [금액] : 믿음직한 친구에게 돈을 안전하게 송금해요.
+/신고 [플레이어] [사유] : 비매너/어뷰징 유저를 발견했다면 주저 말고 신고해 주세요. <br>(※ 명령어보다는 스태프에게 DM 주시는 편이 훨씬 빠른 조치가 가능하답니다 🤫)</pre>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 5-3. 사용 불가 모드 안내 -->
+                <section class="guide-section" style="--accent-hero: var(--accent-villain);">
+                    <div class="section-header">
+                        <i class="ra ra-poison-cloud"></i>
+                        <h3>사용 불가 모드 안내</h3>
+                    </div>
+                    <div class="section-body">
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">
+                            모두가 공정하고 즐겁게 모험을 즐길 수 있도록 아래의 모드 및 프로그램 사용은 엄격히 금지됩니다! 적발 시 곧바로 무거운 벌을 받게 될 거에요.
+                        </p>
+                        <ul class="sub-list" style="border-left: 2px solid var(--accent-villain);">
+                            <li><strong>엑스레이 (X-Ray) 계열 모드 및 리소스팩</strong> (광물 투시 등)</li>
+                            <li><strong>감마 (밝기 조절) 계열 모드 및 쉐이더</strong></li>
+                            <li><strong>핵 (Hack) 및 불법 클라이언트</strong> (Wurst, Impact 등 비정상 무브먼트/전투 보조)</li>
+                            <li><strong>매크로 및 오토 클릭커</strong> (자동 사냥, 자동 낚시 기계장치 등)</li>
+                            <li><strong>미니맵 관련 모드 전체</strong></li>
+                        </ul>
+                        <ul>
+                            <li>
+                                <strong>최적화 모드 및 일반 쉐이더 종류는 기본적으로 허용됩니다!</strong>
+                                    <br>└ 사용 중인 모드가 허용되는지 잘 모르겠다면 스태프에게 말씀해주세요.
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Tab 6: 스폰 & 메뉴 -->
+            <div id="tab-system" class="tab-content">
+                <!-- 6-1. SHIFT+F 서버 메뉴 UI (CSS Grid 시뮬레이션) -->
+                <section class="guide-section">
+                    <div class="section-header">
+                        <i class="ra ra-gears"></i>
+                        <h3>인게임 서버 메뉴 가이드</h3>
+                    </div>
+                    <div class="section-body">
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">
+                            인게임에서 <strong>[SHIFT + F]</strong> 키를 입력하면 전용 서버 메뉴 GUI가 열립니다. <br>
+                            아래 메뉴 슬롯에 마우스를 올려 자세한 설명을 확인하세요!
+                        </p>
+
+                        <!-- 클래식 마인크래프트 감성 격자 시뮬레이터 -->
+                        <div class="inventory-container">
+                            <div class="inventory-title-box">
+                                <h4 class="inventory-title">// RPG SYSTEM MENU</h4>
+                                <span class="inventory-subtitle">9 x 6 Slots Inventory View</span>
+                            </div>
+                            
+                            <div class="inventory-grid-outer">
+                                <div class="inventory-grid-inner" id="inv-grid">
+                                    <!-- 1행 (y = 0%) -->
+                                    <div class="inventory-slot" data-name="쓰레기통" data-badge="보관" data-desc="'Q'로 아이템을 버리지 못합니다. 쓰레기통에 버린 아이템은 복구가 되지 않으니 주의하세요!" style="background-position: 0% 0%;"></div>
+                                    <div class="inventory-slot slot-empty"></div>
+                                    <div class="inventory-slot" data-name="캐시상점" data-badge="상점" data-desc="서버 후원 및 정식 캐시 아이템을 쇼핑할 수 있는 메뉴입니다." style="background-position: 25% 0%;"></div>
+                                    <div class="inventory-slot slot-empty"></div>
+                                    <div class="inventory-slot" data-name="랜덤야생" data-badge="이동" data-desc="광활한 야생 구역의 랜덤 좌표로 텔레포트합니다. 여러 번 누르지 말고 기다려주세요! 5분의 쿨타임이 적용됩니다." style="background-position: 50% 0%;"></div>
+                                    <div class="inventory-slot slot-empty"></div>
+                                    <div class="inventory-slot" data-name="출석" data-badge="경제" data-desc="매일 출석체크를 완료하여 출석 코인을 포함한 보상을 받아가세요." style="background-position: 75% 0%;"></div>
+                                    <div class="inventory-slot slot-empty"></div>
+                                    <div class="inventory-slot" data-name="정보" data-badge="전투/RPG" data-desc="RPG에서 사용되는 스탯입니다. 채팅창에서 캐릭터의 스펙을 확인하세요!" style="background-position: 100% 0%;"></div>
+                                    
+                                    <!-- 2행 (y = 20%) - 전체 공백 -->
+                                    <div class="inventory-slot slot-empty"></div>
+                                    <div class="inventory-slot slot-empty"></div>
+                                    <div class="inventory-slot slot-empty"></div>
+                                    <div class="inventory-slot slot-empty"></div>
+                                    <div class="inventory-slot slot-empty"></div>
+                                    <div class="inventory-slot slot-empty"></div>
+                                    <div class="inventory-slot slot-empty"></div>
+                                    <div class="inventory-slot slot-empty"></div>
+                                    <div class="inventory-slot slot-empty"></div>
+                                    
+                                    <!-- 3행 (y = 40%) -->
+                                    <div class="inventory-slot" data-name="창고" data-badge="보관" data-desc="54칸의 크기를 가진 창고를 최대 14개 까지 가질 수 있습니다. 창고추가권이 없더라도 엔더 상자가 있으니 꼭 활용하세요!" style="background-position: 0% 40%;"></div>
+                                    <div class="inventory-slot" data-name="가방" data-badge="보관" data-desc="9칸의 크기를 가진 휴대용 가방입니다. 확장권을 사용해 최대 36칸 까지 확장해보세요!" style="background-position: 12.5% 40%;"></div>
+                                    <div class="inventory-slot" data-name="우편함" data-badge="시스템" data-desc="서버 불시 이벤트 보상 등을 확인하고 수령할 수 있습니다." style="background-position: 25% 40%;"></div>
+                                    <div class="inventory-slot slot-empty"></div>
+                                    <div class="inventory-slot" data-name="스폰" data-badge="이동" data-desc="모든 모험의 허브인 스폰 지역으로 이동합니다. 5초 간 이동하지 마세요!" style="background-position: 50% 40%;"></div>
+                                    <div class="inventory-slot slot-empty"></div>
+                                    <div class="inventory-slot" data-name="장비" data-badge="장착" data-desc="RPG 스탯이 존재하는 아이템을 장착할 수 있는 창을 보여줍니다. 장비는 꼭 맞는 위치에 장착해주세요!" style="background-position: 75% 40%;"></div>
+                                    <div class="inventory-slot" data-name="버프" data-badge="전투" data-desc="현재 서버 전역에 발동 중인 드롭률 버프 상태를 열람합니다." style="background-position: 87.5% 40%;"></div>
+                                    <div class="inventory-slot" data-name="룬" data-badge="성장" data-desc="스탯을 고정 수치(+) 또는 퍼센트(*)로 올려주는 룬을 장착하여 스탯을 무한히 강화합니다." style="background-position: 100% 40%;"></div>
+                                    
+                                    <!-- 4행 (y = 60%) - 전체 공백 -->
+                                    <div class="inventory-slot slot-empty"></div>
+                                    <div class="inventory-slot slot-empty"></div>
+                                    <div class="inventory-slot slot-empty"></div>
+                                    <div class="inventory-slot slot-empty"></div>
+                                    <div class="inventory-slot slot-empty"></div>
+                                    <div class="inventory-slot slot-empty"></div>
+                                    <div class="inventory-slot slot-empty"></div>
+                                    <div class="inventory-slot slot-empty"></div>
+                                    <div class="inventory-slot slot-empty"></div>
+
+                                    <!-- 5행 (y = 80%) -->
+                                    <div class="inventory-slot" data-name="일반제작대" data-badge="제작" data-desc="3x3 크기의 조합대를 엽니다." style="background-position: 0% 80%;"></div>
+                                    <div class="inventory-slot" data-name="특수제작대" data-badge="제작" data-desc="보스 기믹 등에 사용되는 아이템 조합을 위해 사용합니다." style="background-position: 12.5% 80%;"></div>
+                                    <div class="inventory-slot" data-name="일반제작서" data-badge="정보" data-desc="도구 및 특수 제작 레시피와 필요 자원 일람을 책 형태로 확인합니다." style="background-position: 25% 80%;"></div>
+                                    <div class="inventory-slot slot-empty"></div>
+                                    <div class="inventory-slot" data-name="코인" data-badge="경제" data-desc="실시간으로 변동하는 RPG 코인의 시세를 확인하고 거래를 진행합니다." style="background-position: 50% 80%"></div>
+                                    <div class="inventory-slot slot-empty"></div>
+                                    <div class="inventory-slot" data-name="추출" data-badge="성장" data-desc="자신의 바닐라 레벨 경험치를 소모하여, 특수 아이템으로 교환합니다. 전직, 룬, 장비 제작 등 여러 핵심 시스템에 사용됩니다." style="background-position: 75% 80%;"></div>
+                                    <div class="inventory-slot" data-name="유저상점" data-badge="경제" data-desc="유저가 등록한 아이템의 판매가를 확인하고 구매할 수 있습니다." style="background-position: 87.5% 80%"></div>
+                                    <div class="inventory-slot" data-name="도감" data-badge="정보" data-desc="야생을 통해 블록 도감을 작성하여 보상과 지식을 수집합니다." style="background-position: 100% 80%;"></div>
+
+                                    <!-- 6행 (y = 100%) -->
+                                    <div class="inventory-slot slot-empty"></div>
+                                    <div class="inventory-slot slot-empty"></div>
+                                    <div class="inventory-slot slot-empty"></div>
+                                    <div class="inventory-slot" data-name="일일 퀘스트" data-badge="성장" data-desc="매일 갱신되는 퀘스트를 확인하고 수락 및 진행합니다." style="background-position: 37.5% 100%;"></div>
+                                    <div class="inventory-slot" data-name="수리" data-badge="장비" data-desc="사용 중인 도구/장비의 내구도를 50,000원 지불하고 긴급 수선 복구합니다." style="background-position: 50% 100%;"></div>
+                                    <div class="inventory-slot" data-name="칭호" data-badge="시스템" data-desc="자신의 아이덴티티를 뽐낼 수 있는 특별한 업적 칭호를 활성화 및 장착합니다." style="background-position: 62.5% 100%;"></div>
+                                    <div class="inventory-slot slot-empty"></div>
+                                    <div class="inventory-slot slot-empty"></div>
+                                    <div class="inventory-slot slot-empty"></div>
+                                </div>
+                            </div>
+
+                            <!-- 동적 상세 카드 영역 -->
+                            <div class="menu-detail-card">
+                                <div class="menu-detail-title" id="menu-title">
+                                    <span>인벤토리 슬롯에 마우스를 올려보세요!</span>
+                                    <span class="badge-mono" id="menu-badge">SYSTEM</span>
+                                </div>
+                                <p class="menu-detail-desc" id="menu-desc">
+                                    각 메뉴의 이름과 기능을 자세히 설명해드릴게요.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 6-2. 용의 구슬 전직 심화 안내 -->
+                <section class="guide-section" style="margin-top: 24px; padding-top: 24px;">
+                    <div class="section-header">
+                        <i class="ra ra-dragon"></i>
+                        <h3>추출 및 사용처</h3>
+                    </div>
+                    <div class="section-body">
+                        <ul>
+                            <li><strong>구슬 획득법:</strong> 메뉴판의 <strong>'추출'</strong> 슬롯을 통해 모아둔 자신의 바닐라 레벨을 대가로 추출하여 제작할 수 있습니다.</li>
+                            <li><strong>구슬 등급 및 분류:</strong> 추출 시 소모하는 경험치 레벨에 따라 추출해내는 구슬 종류가 나뉘고, 사용처에 따라 요구하는 구슬이 달라요! 추출 전에 한 번 더 고민해보는게 어떨까요?</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- 6-3. 서버 스폰 지역 픽셀 지도 -->
+                <section class="guide-section" style="margin-top: 24px; padding-top: 24px;">
+                    <div class="section-header">
+                        <i class="ra ra-compass"></i>
+                        <h3>서버 스폰 지역 픽셀 안내도</h3>
+                    </div>
+                    <div class="section-body">
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">
+                            우리 서버의 모험가들이 모여 교류하는 아기자기한 스폰 지형도예요! <br>
+                            마우스 드래그로 자유롭게 이동하거나 휠을 굴려 확대/축소해 보세요. <br>
+                            에메랄드빛 동그라미 핀들을 클릭하면 상점이나 주요 시설에 대한 안내 툴팁이 퐁퐁 튀어나온답니다! 😊
+                        </p>
+                        
+                        <!-- Leaflet 맵이 렌더링될 프리미엄 다크 보더 컨테이너 -->
+                        <div id="spawn-leaflet-map" style="height: 520px; width: 100%; background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: 8px; z-index: 1;"></div>
+                        
+                        <!-- Leaflet 기여 표기 (전역 푸터 오염 차단 정적 라벨) -->
+                        <p style="font-size: 0.72rem; color: var(--text-muted); text-align: right; margin-top: 5px; font-family: monospace;">Map Engine powered by Leaflet</p>
+                    </div>
+                </section>
+            </div>
+            <!-- 약속 동의 직접 기입 및 완료 버튼 영역 -->
+            <div class="guide-action-section">
+                {% if user_status == 'newbie' %}
+                <div class="promise-container">
+                    <div class="promise-instruction-box">
+                        <!-- 동적 가이드 읽기 락 공지 배지 탑재 -->
+                        <p class="promise-target-label" id="lock-notice" style="color: var(--accent-special); font-weight: bold; transition: all 0.3s ease;"><i class="fas fa-lock"></i> 가이드의 모든 탭을 차례로 읽으셔야 작성이 가능합니다. (확인 완료: 1/6)</p>
+                        <div class="promise-target-text" id="promise-target-text">미숙지로 인한 불이익은 본인 책임임을 동의합니다</div>
+                    </div>
+                    <div class="promise-input-wrapper fade-out-input">
+                        <input type="text" id="promise-input" class="promise-input" placeholder="⚠️ 모든 가이드 탭 확인 후 서약 작성이 활성화됩니다." onpaste="return false;" autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="button-container">
+                    <button id="complete-btn" class="complete-btn" disabled>
+                        <span>중요 수칙 확인 및 동의하기</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+                {% elif user_status == 'member' %}
+                <div class="status-info-box member-box">
+                    <i class="fas fa-check-double"></i>
+                    <p>당신은 이미 RPG 서버의 정식 멤버입니다.<br>가이드 내용을 다시 한 번 숙지해 주셔서 감사합니다.</p>
+                    <a href="/" class="return-link">메인 페이지로 돌아가기</a>
+                </div>
+                {% else %}
+                <div class="status-info-box guest-box">
+                    <i class="fab fa-discord"></i>
+                    <p>가이드 완료 및 서버 입장을 위해서는 디스코드 성인 인증이 필요합니다.<br>아래 버튼을 눌러 디스코드 서버에서 모험을 시작하세요!</p>
+                    <a href="{{ discord_invite_url }}" class="discord-btn" target="_blank">디스코드 서버 입장하기</a>
+                </div>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- 완료 안내 모달 -->
+<div id="complete-modal" class="modal-overlay hidden">
+    <div class="widget modal-content" style="max-width: 450px; width: 90%; padding: 30px; text-align: center; margin: auto;">
+        <div class="modal-icon" style="font-size: 3.5rem; color: var(--accent-hero); margin-bottom: 20px;">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <h3 style="font-size: 1.5rem; color: var(--text-main); margin-bottom: 12px; font-weight: 700;">가이드 확인 완료!</h3>
+        <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 25px;">
+            축하합니다! 온보딩 절차가 완료되었습니다.<br>
+            디스코드의 정식 멤버 채널들이 개방되었으니,<br>
+            <strong style="color: #fff;">지금 디스코드로 돌아가서 확인해 주세요.</strong>
+        </p>
+        <button id="modal-close-btn" class="status-btn btn-guide" style="width: 100%; cursor: pointer; padding: 12px; border-radius: 0px; border: 1px solid var(--accent-hero); background: transparent; color: var(--accent-hero); font-weight: bold; transition: all 0.2s; font-family: 'Space Mono', 'Pretendard', sans-serif; font-size: 0.85rem;">닫기</button>
+    </div>
+</div>
+
+<!-- 스토리 전문 모달 -->
+<div id="story-modal" class="modal-overlay hidden">
+    <div class="widget modal-content story-modal-content" style="width: 90%; margin: auto; position: relative;">
+        <!-- 닫기 버튼 -->
+        <button id="story-modal-close-x" style="position: absolute; top: 15px; right: 15px; background: transparent; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer; transition: color 0.2s;"><i class="fas fa-times"></i></button>
+        
+        <div style="border-bottom: 1px dashed var(--border-color); padding-bottom: 15px; margin-bottom: 25px;">
+            <span class="sub-title-mono" style="color: var(--accent-special); font-size: 0.65rem; letter-spacing: 3px; display: block; margin-bottom: 4px;">ARCHIVE // WAR_OF_ARCANA</span>
+            <h3 style="font-size: 1.4rem; color: var(--text-main); margin: 0; font-weight: 800; letter-spacing: -0.5px;">아르카나 전쟁의 기록</h3>
+        </div>
+        
+        <div class="story-modal-body">
+            <p class="story-paragraph">
+                인류의 운명을 건 <strong>'아르카나 전쟁'</strong>의 끝은 참혹했습니다. 최전방 방어선이었던 <strong>‘게이트 L’</strong>이 마족의 압도적인 진격 앞에 함락되던 날, 부대의 절반이 넘는 동료들이 차가운 시신이 되어 전장에 뒤엉켰습니다.
+            </p>
+            <p class="story-paragraph">
+                더 이상의 희망이 없음을 직감한 <strong>'스톤(Stone)'</strong>은 결단을 내려야 했습니다. 그는 금단으로 여겨던 <strong>'시간의 힘'</strong>을 폭주시켜, 살아남은 잔존 병력과 함께 대륙의 시공간을 통째로 건너뛰는 극단적인 선택을 감행합니다.
+            </p>
+            <p class="story-paragraph">
+                그렇게 눈을 뜬 곳은 <strong>30년 뒤의 미래</strong>.
+            </p>
+            <p class="story-paragraph">
+                하지만 인류의 멸망을 막기 위해 지불한 시간 도약의 대가는 너무나도 가혹했습니다. 시공간의 균열 속에서 모든 동료는 기억의 파편을 난도질당한 채, 마족들에게 이미 유린당해 황폐해진 게이트 A부터 Z까지 대륙 전역으로 뿔뿔이 흩어져 버렸습니다. 자신이 누구인지, 왜 싸워야 하는지조차 잊어버린 채로.
+            </p>
+            <p class="story-paragraph">
+                이제 시간의 방랑자가 된 '스톤'은 턱밑까지 차오른 마족의 위협을 뚫고, 다시 무기를 들어야 합니다. 게이트 속에 숨겨진 단서들을 추적하고, 과거의 인연들을 하나씩 찾아내어 그들의 지워진 기억을 깨워야 합니다.
+            </p>
+            <p class="story-paragraph">
+                30년 전 전멸의 현장이었던 통곡의 벽, 게이트 L을 넘어 마계의 심장부로.
+            </p>
+            <p class="story-paragraph" style="margin-bottom: 0;">
+                흩어진 영웅들을 모아, 미처 끝내지 못했던 <strong>그날의 전쟁을 완결하십시오.</strong>
+            </p>
+        </div>
+        
+        <button id="story-modal-close-btn" class="status-btn btn-guide" style="width: 100%; cursor: pointer; padding: 12px; border-radius: 0px; border: 1px solid var(--accent-hero); background: transparent; color: var(--accent-hero); font-weight: bold; transition: all 0.2s; font-family: 'Space Mono', 'Pretendard', sans-serif; font-size: 0.82rem;">기록 닫기</button>
+    </div>
+ </div>
+ 
+<!-- 중요 수칙 동의 모달 -->
+<div id="rules-modal" class="modal-overlay hidden">
+    <div class="widget modal-content story-modal-content" style="width: 90%; margin: auto; position: relative; max-width: 650px;">
+        <!-- 닫기 버튼 -->
+        <button id="rules-modal-close-x" style="position: absolute; top: 15px; right: 15px; background: transparent; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer; transition: color 0.2s;"><i class="fas fa-times"></i></button>
+        
+        <div style="border-bottom: 1px dashed var(--border-color); padding-bottom: 15px; margin-bottom: 25px;">
+            <span class="sub-title-mono" style="color: var(--accent-special); font-size: 0.65rem; letter-spacing: 3px; display: block; margin-bottom: 4px;">ONBOARDING // RULES</span>
+            <h3 style="font-size: 1.4rem; color: var(--text-main); margin: 0; font-weight: 800; letter-spacing: -0.5px;">서버 이용 중요 수칙</h3>
+        </div>
+        
+        <div class="rules-modal-body">
+            <!-- 금지 수칙 -->
+            <div class="rules-section" style="margin-bottom: 25px;">
+                <h4 style="color: var(--accent-villain); font-size: 1rem; font-weight: 800; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                    <span>서버 필수 금지 수칙 - 위반 시 무조건 즉시 제재</span>
+                </h4>
+                <ul style="list-style: none; padding-left: 0; margin: 0;">
+                    <li style="position: relative; padding-left: 20px; margin-bottom: 8px; color: var(--text-main); font-size: 0.88rem; line-height: 1.6;">
+                        <span style="position: absolute; left: 0; color: var(--accent-villain);">❯</span>
+                        메뉴 내 랜덤야생 버튼 반복 클릭 금지
+                    </li>
+                    <li style="position: relative; padding-left: 20px; margin-bottom: 8px; color: var(--text-main); font-size: 0.88rem; line-height: 1.6;">
+                        <span style="position: absolute; left: 0; color: var(--accent-villain);">❯</span>
+                        몬스터 스포너 악용 금지
+                    </li>
+                    <li style="position: relative; padding-left: 20px; margin-bottom: 8px; color: var(--text-main); font-size: 0.88rem; line-height: 1.6;">
+                        <span style="position: absolute; left: 0; color: var(--accent-villain);">❯</span>
+                        개인 인챈트 및 인게임 내 상점 미판매 장비 사용 금지
+                    </li>
+                    <li style="position: relative; padding-left: 20px; margin-bottom: 8px; color: var(--text-main); font-size: 0.88rem; line-height: 1.6;">
+                        <span style="position: absolute; left: 0; color: var(--accent-villain);">❯</span>
+                        지정 맵 탈출 금지
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- 인게임 규칙 -->
+            <div class="rules-section" style="margin-bottom: 25px;">
+                <h4 style="color: var(--accent-special); font-size: 1rem; font-weight: 800; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                    <span>IN-GAME LAW - 경제 및 플레이 규칙</span>
+                </h4>
+                <ul style="list-style: none; padding-left: 0; margin: 0;">
+                    <li style="position: relative; padding-left: 20px; margin-bottom: 8px; color: var(--text-main); font-size: 0.88rem; line-height: 1.6;">
+                        <span style="position: absolute; left: 0; color: var(--accent-special);">❯</span>
+                        무분별한 돈/장비 지원 및 대가 없는 돈 거래 금지
+                    </li>
+                    <li style="position: relative; padding-left: 20px; margin-bottom: 8px; color: var(--text-main); font-size: 0.88rem; line-height: 1.6;">
+                        <span style="position: absolute; left: 0; color: var(--accent-special);">❯</span>
+                        길드원 장비 거래 50% 할인가 고정
+                    </li>
+                    <li style="position: relative; padding-left: 20px; margin-bottom: 8px; color: var(--text-main); font-size: 0.88rem; line-height: 1.6;">
+                        <span style="position: absolute; left: 0; color: var(--accent-special);">❯</span>
+                        유저상점 시세 ±20% 준수
+                    </li>
+                    <li style="position: relative; padding-left: 20px; margin-bottom: 8px; color: var(--text-main); font-size: 0.88rem; line-height: 1.6;">
+                        <span style="position: absolute; left: 0; color: var(--accent-special);">❯</span>
+                        난파선/유적 등 야생 내 자연 스폰 상자 열어서 확인 금지 (부숴서 파밍)
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- 커뮤니티 기본 매너 -->
+            <div class="rules-section" style="margin-bottom: 25px;">
+                <h4 style="color: var(--accent-hero); font-size: 1rem; font-weight: 800; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                    <span>COMMUNITY - 디스코드 및 기본 매너</span>
+                </h4>
+                <ul style="list-style: none; padding-left: 0; margin: 0;">
+                    <li style="position: relative; padding-left: 20px; margin-bottom: 8px; color: var(--text-main); font-size: 0.88rem; line-height: 1.6;">
+                        <span style="position: absolute; left: 0; color: var(--accent-hero);">❯</span>
+                        모든 애로사항 및 건의사항은 담당 스태프에게 DM
+                    </li>
+                    <li style="position: relative; padding-left: 20px; margin-bottom: 8px; color: var(--text-main); font-size: 0.88rem; line-height: 1.6;">
+                        <span style="position: absolute; left: 0; color: var(--accent-hero);">❯</span>
+                        부적절 언행 금지
+                    </li>
+                    <li style="position: relative; padding-left: 20px; margin-bottom: 8px; color: var(--text-main); font-size: 0.88rem; line-height: 1.6;">
+                        <span style="position: absolute; left: 0; color: var(--accent-hero);">❯</span>
+                        경고 3회 누적 시 밴
+                    </li>
+                </ul>
+            </div>
+
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">
+                ⚠ 본 수칙 외의 축약/생략된 상세 규칙 및 실시간 조항은 디스코드 [#🔖ㅣ규칙] 채널을 통해 상시 업데이트됩니다. 디스코드 내 규칙 전문을 최종 확인하지 않아 발생하는 모든 책임은 유저 본인에게 있습니다.
+            </p>
+        </div>
+        
+        <div style="border-top: 1px dashed var(--border-color); padding-top: 20px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; justify-content: center;">
+            <input type="checkbox" id="rules-agree-chk" style="width: 18px; height: 18px; cursor: pointer;">
+            <label for="rules-agree-chk" style="color: var(--text-main); font-size: 0.9rem; font-weight: bold; cursor: pointer; user-select: none;">위의 모든 중요 수칙을 숙지하였으며, 위반 시 제재 조치에 동의합니다.</label>
+        </div>
+        
+        <button id="rules-modal-confirm-btn" class="status-btn btn-guide rules-confirm-btn" disabled>수칙 확인 완료</button>
+    </div>
+</div>
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+ <script src="/static/guide.js?v=1.0.2"></script>
+{% endblock %}

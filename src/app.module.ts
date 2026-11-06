@@ -5,6 +5,7 @@ import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
 import { AuthModule } from './auth/auth.module.js';
 import { RedisModule } from './redis/redis.module.js';
+import { ViewModule } from './view/view.module.js';
 import { User, Job, MagicToken } from './entities/index.js';
 
 @Module({
@@ -19,7 +20,7 @@ import { User, Job, MagicToken } from './entities/index.js';
       useFactory: (config: ConfigService) => ({
         type: 'postgres',
         host: config.get<string>('DATABASE_HOST', 'localhost'),
-        port: Number(config.get<number>('DATABASE_PORT', 5432)),
+        port: Number(config.get<number>('DATABASE_PORT', 5433)),
         username: config.get<string>('DATABASE_USER', 'rpg_user'),
         password: config.get<string>('DATABASE_PASSWORD', 'rpg_password'),
         database: config.get<string>('DATABASE_NAME', 'rpg_sync'),
@@ -30,6 +31,7 @@ import { User, Job, MagicToken } from './entities/index.js';
     }),
     RedisModule,
     AuthModule,
+    ViewModule,
   ],
   controllers: [AppController],
   providers: [AppService],

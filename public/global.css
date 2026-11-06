@@ -1,0 +1,309 @@
+:root {
+    /* 딥 네이비 베이스 */
+    --bg-base: #0D1117;
+    --bg-surface: #161B22;
+
+    /* 눈이 편안한 파스텔 톤 포인트 */
+    --accent-hero: #10B981; /* 신비롭고 쾌적한 에메랄드/민트 그린 */
+    --accent-villain: #F87171; /* 부드러운 코랄 레드 */
+
+    /* 텍스트 컬러 (너무 쨍한 흰색 배제) */
+    --text-main: #E2E8F0;
+    --text-muted: #8B949E;
+
+    /* 보더 및 라인 */
+    --border-color: #30363D;
+    --border-light: rgba(255, 255, 255, 0.1);
+    --border-faint: rgba(255, 255, 255, 0.04);
+
+    /* 위젯 배경 */
+    --bg-widget-dark: rgba(22, 27, 34, 0.85);
+    --bg-widget-medium: rgba(22, 27, 34, 0.7);
+    --bg-widget-light: rgba(22, 27, 34, 0.5);
+
+    /* 모달 및 헤더 */
+    --bg-overlay-dark: rgba(1, 4, 9, 0.8);
+    --bg-header-gradient-start: rgba(13, 17, 23, 0.95);
+    --bg-header-gradient-end: rgba(13, 17, 23, 0);
+
+    /* 그림자 색상 */
+    --shadow-hero: rgba(16, 185, 129, 0.25); /* 에메랄드 글로우 효과로 교체 */
+    --shadow-villain: rgba(248, 113, 113, 0.25);
+    --shadow-dark: rgba(0, 0, 0, 0.6);
+
+    /* 관리자/유틸리티 색상 (채도 완화) */
+    --accent-warning: #D29922;
+    --accent-success: #238636;
+    --accent-info: #10B981; /* 에메랄드/민트 연동 */
+    --accent-special: #F59E0B; /* 고급스러운 엠버 골드로 교체 */
+
+    --header-height: 60px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* 모든 폼 입력 및 버튼 요소가 부모의 폰트를 정상 상속받도록 강제 */
+button, input, select, textarea {
+    font-family: inherit;
+}
+
+body {
+    background-color: var(--bg-surface);
+    color: var(--text-main);
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+
+    background-image:
+        radial-gradient(circle at center, transparent 30%, var(--bg-overlay-dark) 120%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M60 0 L0 0 L0 60' fill='none' stroke='%2300f2fe' stroke-width='1' stroke-dasharray='10 7 3 5' stroke-opacity='0.05'/%3E%3C/svg%3E");
+    background-size: 100% 100%, 60px 60px;
+    background-position: center center;
+}
+
+/* 프리미엄 딥 다크 테마 커스텀 스크롤바 스타일링 */
+body::-webkit-scrollbar {
+    width: 8px;
+}
+body::-webkit-scrollbar-track {
+    background: var(--bg-base);
+}
+body::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 0px;
+    border: 1px solid var(--bg-base);
+    transition: background 0.3s;
+}
+body::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-hero);
+}
+
+.viewport-container {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header Styles */
+.global-header {
+    position: fixed;
+    top: 0; left: 0; width: 100%;
+    height: var(--header-height);
+    z-index: 1000;
+    background: linear-gradient(to bottom, var(--bg-header-gradient-start) 0%, var(--bg-header-gradient-end) 100%);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border-bottom: 1px solid var(--border-faint);
+}
+
+.global-header.scrolled {
+    background: rgba(13, 17, 23, 0.75) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(16, 185, 129, 0.2) !important;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(16, 185, 129, 0.05);
+}
+
+.header-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 24px;
+    text-shadow: 0 2px 6px var(--shadow-dark);
+}
+
+.gnb-nav a {
+    color: var(--text-main);
+    text-decoration: none;
+    margin: 0 16px;
+    font-size: 0.9rem;
+    position: relative;
+    padding-bottom: 4px;
+    font-family: 'Space Mono', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    letter-spacing: 0.5px;
+}
+
+.gnb-nav a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--accent-hero);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform;
+}
+
+.gnb-nav a:hover {
+    color: var(--accent-hero);
+}
+
+.gnb-nav a:hover::after {
+    transform: scaleX(1);
+}
+
+.logo {
+    font-family: 'Jura', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--text-main);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: color 0.3s, text-shadow 0.3s;
+}
+
+.logo:hover {
+    color: var(--accent-hero);
+    text-shadow: 0 0 10px var(--shadow-hero), 0 0 20px color-mix(in srgb, var(--accent-hero) 40%, transparent);
+}
+
+/* Footer Styles */
+.dash-footer {
+    height: 60px;
+    background: transparent;
+    border-top: 1px solid var(--border-faint);
+    flex-shrink: 0;
+    z-index: 100;
+    margin-top: auto;
+}
+
+.footer-container {
+    width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    height: 100%; font-size: 0.75rem; color: var(--text-muted);
+}
+
+.footer-container .attribution {
+    color: var(--text-muted);
+}
+
+/* Global Modal */
+.modal-overlay {
+    display: none;
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: var(--bg-overlay-dark);
+    backdrop-filter: blur(8px);
+    z-index: 9999;
+    justify-content: center; align-items: center;
+}
+.modal-overlay.hidden { display: none; }
+.modal-overlay.open { display: flex; }
+
+.modal-overlay .widget {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 0px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    position: relative;
+    overflow: hidden;
+}
+
+/* =========================================
+   전역 요소 반응형 (Header & Footer)
+   ========================================= */
+
+@media screen and (max-width: 1024px) {
+    body {
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: auto;
+        min-height: 100vh;
+        background-attachment: fixed;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .header-inner {
+        padding: 0 16px;
+    }
+
+    .logo {
+        font-size: 1.3rem;
+    }
+
+    .gnb-nav {
+        display: none;
+    }
+
+    .header-actions {
+        transform: scale(0.9);
+        transform-origin: right center;
+    }
+
+    .global-footer {
+        padding: 20px 16px;
+        font-size: 0.75rem;
+    }
+}
+
+/* =========================================
+   PREMIUM EDITORIAL THEME DEFENSE RULES & UTILITIES
+   ========================================= */
+
+/* 1. 전역 0px 직선화 강제 방어막 */
+[class*="card"], 
+[class*="btn"], 
+[class*="badge"], 
+[class*="modal"], 
+[class*="widget"], 
+[class*="alert"],
+[class*="select"],
+[class*="input"],
+[class*="button"],
+.chip,
+.tag {
+    border-radius: 0px !important;
+}
+
+/* 2. GPU 가속형 밑줄 애니메이션 공통 클래스 */
+.editorial-underline {
+    position: relative;
+    text-decoration: none !important;
+    display: inline-block;
+}
+.editorial-underline::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    bottom: -2px;
+    left: 0;
+    background-color: var(--accent-hero);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform;
+}
+.editorial-underline:hover::after {
+    transform: scaleX(1);
+}
+
+/* 3. 백그라운드 글로우 공통 클래스 및 모바일 최적화 */
+.bg-glow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle at 50% -20%, rgba(16, 185, 129, 0.08), transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+@media screen and (max-width: 768px) {
+    .bg-glow {
+        background: radial-gradient(circle at 50% -20%, rgba(16, 185, 129, 0.02), transparent 90%);
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+}

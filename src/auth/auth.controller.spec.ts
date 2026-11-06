@@ -33,14 +33,24 @@ describe('AuthController (Unit Test)', () => {
     publish: vi.fn().mockResolvedValue(1),
   };
 
+  let mockRequest: any;
   let mockResponse: any;
 
   beforeEach(async () => {
     vi.clearAllMocks();
 
+    mockRequest = {
+      headers: {
+        accept: 'application/json',
+      },
+    };
+
     mockResponse = {
       cookie: vi.fn(),
       clearCookie: vi.fn(),
+      status: vi.fn().mockReturnThis(),
+      json: vi.fn().mockImplementation((data) => data),
+      redirect: vi.fn(),
     };
 
     const module: TestingModule = await Test.createTestingModule({
@@ -68,11 +78,12 @@ describe('AuthController (Unit Test)', () => {
   });
 
   describe('verifyMagicLink', () => {
-    it('유효한 토큰일 경우 JWT 쿠키를 설정하고 유저 세션을 반환한다', async () => {
+    it('유효한 토큰일 경우 JWT 쿠키를 설정하고 유저 세션을 반환한다 (JSON 클라이언트)', async () => {
       mockAuthService.verifyAndConsumeMagicToken.mockResolvedValue(mockUserSession);
 
       const result = await controller.verifyMagicLink(
         { token: 'valid_token_sample', redirectTo: 'main' },
+        mockRequest,
         mockResponse,
       );
 
@@ -83,19 +94,35 @@ describe('AuthController (Unit Test)', () => {
         'mocked_jwt_token_string',
         expect.objectContaining({
           httpOnly: true,
-          secure: true,
-          sameSite: 'strict',
+          sameSite: 'lax',
         }),
       );
-      expect(result.user).toEqual(mockUserSession);
-      expect(result.redirectTo).toBe('/');
+      expect(mockResponse.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          user: mockUserSession,
+          redirectTo: '/',
+        }),
+      );
     });
 
-    it('만료되었거나 잘못된 토큰이면 BadRequestException을 던진다', async () => {
+    it('브라우저 Form 제출 시 쿠키 설정 후 지정 경로로 302 리다이렉트한다', async () => {
+      mockAuthService.verifyAndConsumeMagicToken.mockResolvedValue(mockUserSession);
+      mockRequest.headers['accept'] = 'text/html';
+
+      await controller.verifyMagicLink(
+        { token: 'valid_token_sample', redirectTo: 'guide' },
+        mockRequest,
+        mockResponse,
+      );
+
+      expect(mockResponse.redirect).toHaveBeenCalledWith('/guide');
+    });
+
+    it('만료되었거나 잘못된 토큰이면 BadRequestException을 던진다 (JSON)', async () => {
       mockAuthService.verifyAndConsumeMagicToken.mockResolvedValue(null);
 
       await expect(
-        controller.verifyMagicLink({ token: 'invalid_token' }, mockResponse),
+        controller.verifyMagicLink({ token: 'invalid_token' }, mockRequest, mockResponse),
       ).rejects.toThrow(BadRequestException);
       expect(mockResponse.cookie).not.toHaveBeenCalled();
     });
@@ -142,7 +169,7 @@ describe('AuthController (Unit Test)', () => {
 
       expect(mockResponse.clearCookie).toHaveBeenCalledWith(
         'forum_session',
-        expect.objectContaining({ path: '/', httpOnly: true, secure: true }),
+        expect.objectContaining({ path: '/', httpOnly: true }),
       );
       expect(result.message).toBe('success');
     });

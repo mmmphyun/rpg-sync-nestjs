@@ -127,7 +127,7 @@ describe('AuthModule E2E Test (HTTP 파이프라인 수명주기 검증)', () =>
       const sessionCookie = cookies.find((c: string) => c.startsWith('forum_session='));
       expect(sessionCookie).toBeDefined();
       expect(sessionCookie).toContain('HttpOnly');
-      expect(sessionCookie).toContain('SameSite=Strict');
+      expect(sessionCookie).toContain('SameSite=Lax');
 
       authCookie = sessionCookie.split(';')[0];
     });

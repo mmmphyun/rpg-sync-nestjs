@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+
+{% block og_description %}RPG 서버의 실시간 서버 상태와 이벤트 소식, 공식 가이드를 확인해보세요!{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/index.css?v=1.0.5">
+{% endblock %}
+
+{% block content %}
+<div class="index-layout">
+    <!-- Super Silver & Amber Background Glows -->
+    <div class="bg-glow glow-emerald"></div>
+    <div class="bg-glow glow-amber"></div>
+
+    <!-- Hero Section with Asymmetric Floating Layout -->
+    <section class="hero-section">
+        <div class="hero-container">
+            <!-- Left 55%: Narrative & Worldview Typography -->
+            <div class="hero-left">
+                <div class="worldview-tag space-mono">Saga of Gate</div>
+                <h1 class="hero-title">GATE SEASON 9</h1>
+                <p class="hero-subtitle dynamic-fade" aria-live="polite" aria-atomic="true">게이트의 유일한 생존자, 반</p>
+                <div class="hero-narrative">
+                    <p class="narrative-p dynamic-fade" aria-live="polite" aria-atomic="true">"기억해라. 너희가 남긴 이 오류가, 결국 너희의 심장을 꿰뚫을 테니까."</p>
+                    <p class="narrative-desc">
+                        고대병기의 힘으로 30년을 건너뛴 파멸의 전장, 흩어진 영웅들을 다시 모아 잔존한 마족의 군세에 맞설 마지막 반격을 시작하라! 게이트에 뛰어들어 거대한 전쟁의 제2막을 함께하시겠습니까?
+                    </p>
+                </div>
+                <div class="hero-actions">
+                    <a href="/guide" class="hero-btn primary-glow space-mono"><i class="ra ra-trail"></i> SERVER GUIDE</a>
+                    <a href="{{ discord_invite_url }}" target="_blank" class="hero-btn secondary-glow space-mono"><i class="fab fa-discord"></i> DISCORD</a>
+                </div>
+
+                <!-- 미니 서버 상태 위젯 -->
+                <div id="mini-server-status"></div>
+            </div>
+            
+            <!-- Right 45%: Swiper Floating Card Banner -->
+            <div class="hero-right">
+                <div class="hero-card-wrapper">
+                    <div class="swiper" id="hero-swiper">
+                        <div class="swiper-wrapper" id="banner-wrapper">
+                            <!-- 초기 로딩 스켈레톤 UI -->
+                            <div class="swiper-slide skeleton"></div>
+                        </div>
+                        <div class="swiper-pagination"></div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Scroll Down Cue with Pulsing Emerald Neon Mouse -->
+        <div class="scroll-cue">
+            <span class="scroll-text space-mono">SCROLL TO EXPLORE</span>
+            <div class="scroll-mouse">
+                <div class="scroll-wheel"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: Quest Journal Onboarding Timeline (100vh) -->
+    <section class="quest-journal-section">
+        <div class="section-decor-header">
+            <span class="decor-line"></span>
+            <h2 class="quest-section-title space-mono"><i class="ra ra-scroll-unfurled"></i> QUEST JOURNAL</h2>
+            <p class="quest-section-subtitle">정식 멤버 등록을 위한 온보딩 절차</p>
+            <span class="decor-line"></span>
+        </div>
+        
+        <div class="timeline-container">
+            <div class="timeline-track">
+                <!-- SVG Arc Fantasy Dashed Track -->
+                <svg class="timeline-svg-track" xmlns="http://www.w3.org/2000/svg">
+                    <path d="" fill="none" stroke="rgba(255, 255, 255, 0.05)" stroke-width="2" stroke-dasharray="8 6" id="track-path"></path>
+                    <path d="" fill="none" stroke="var(--accent-hero)" stroke-width="2" stroke-dasharray="8 6" id="track-active-path" style="stroke-dashoffset: 1000; stroke-dasharray: 1000; transition: stroke-dashoffset 0.6s cubic-bezier(0.25, 0.8, 0.25, 1); opacity: 0.75; filter: drop-shadow(0 0 8px var(--accent-hero));"></path>
+                </svg>
+            </div>
+            
+            <div class="timeline-steps">
+                <div class="timeline-step step-1" data-step="1">
+                    <div class="step-card">
+                        <div class="step-badge space-mono">STEP 01</div>
+                        <div class="step-icon"><i class="fab fa-discord"></i></div>
+                        <h4 class="step-title">1. 공식 디스코드 입장</h4>
+                        <p class="step-desc">디스코드 채널로 접속하여 성인인증 탭 확인하기</p>
+                    </div>
+                </div>
+                <div class="timeline-step step-2" data-step="2">
+                    <div class="step-card">
+                        <div class="step-badge space-mono">STEP 02</div>
+                        <div class="step-icon"><i class="fas fa-id-card"></i></div>
+                        <h4 class="step-title">2. 디스코드 본인 인증</h4>
+                        <p class="step-desc">개설된 프라이빗 채널에서 신분증 및 닉네임 검증 받기</p>
+                    </div>
+                </div>
+                <div class="timeline-step step-3" data-step="3">
+                    <div class="step-card">
+                        <div class="step-badge space-mono">STEP 03</div>
+                        <div class="step-icon"><i class="ra ra-quill-ink"></i></div>
+                        <h4 class="step-title">3. 웹 가이드 서약 완료</h4>
+                        <p class="step-desc">발급된 고유 링크로 접속해 규칙 확인 후 서약 타이핑</p>
+                    </div>
+                </div>
+                <div class="timeline-step step-4" data-step="4">
+                    <div class="step-card">
+                        <div class="step-badge space-mono">STEP 04</div>
+                        <div class="step-icon"><i class="ra ra-capitol"></i></div>
+                        <h4 class="step-title">4. 마인크래프트 서버 접속</h4>
+                        <p class="step-desc">정식 역할 부여 확인 후 멀티플레이 주소로 입장하기</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: Navigation & Premium Dashboard (100vh) -->
+    <section class="dashboard-section">
+        <!-- Quick Links Glassmorphism Card Grid -->
+        <nav class="quick-links">
+            <a href="/notice" class="quick-item glass-card-glow text-emerald">
+                <div class="card-noise"></div>
+                <div class="icon-wrapper"><i class="ra ra-scroll-unfurled"></i></div>
+                <div class="card-content">
+                    <span class="title">공지사항</span>
+                    <span class="desc">RPG 서버의 새로운 소식과 패치노트</span>
+                </div>
+            </a>
+            <a href="/event" class="quick-item glass-card-glow text-amber">
+                <div class="card-noise"></div>
+                <div class="icon-wrapper"><i class="ra ra-horn-call"></i></div>
+                <div class="card-content">
+                    <span class="title">이벤트</span>
+                    <span class="desc">풍성한 보상이 가득한 정기 이벤트 정보</span>
+                </div>
+            </a>
+            <a href="/jobs" class="quick-item glass-card-glow text-emerald">
+                <div class="card-noise"></div>
+                <div class="icon-wrapper"><i class="ra ra-crossed-swords"></i></div>
+                <div class="card-content">
+                    <span class="title">직업설명</span>
+                    <span class="desc">85가지 이상의 특색 있는 직업 정보</span>
+                </div>
+            </a>
+            <a href="/tips" class="quick-item glass-card-glow text-amber">
+                <div class="card-noise"></div>
+                <div class="icon-wrapper"><i class="ra ra-key"></i></div>
+                <div class="card-content">
+                    <span class="title">꿀팁창고</span>
+                    <span class="desc">초보 모험가를 위한 가이드와 유용한 팁</span>
+                </div>
+            </a>
+        </nav>
+
+        <!-- 2-Column Dashboard Grid -->
+        <div class="dashboard-grid two-column">
+            <!-- [최근 리뷰] 위젯 -->
+            <article class="widget">
+                <h3 class="widget-title space-mono">
+                    <i class="fas fa-comment-alt"></i> RECENT REVIEWS 
+                    <span class="title-ko">최근 직업 리뷰</span>
+                </h3>
+                <div id="recent-reviews-content" class="widget-body inner-scroll"></div>
+            </article>
+
+            <!-- [최근 업데이트] 위젯 -->
+            <article class="widget">
+                <h3 class="widget-title space-mono">
+                    <i class="fas fa-sync-alt"></i> RECENT UPDATES 
+                    <span class="title-ko">최근 업데이트</span>
+                </h3>
+                <ul id="latest-posts" class="widget-body inner-scroll"></ul>
+            </article>
+        </div>
+
+        <!-- 세 번째 섹션 내부 수렴형 정식 푸터 -->
+        <footer class="dashboard-footer">
+            <p>&copy; 2026 RPG Sync Gate. All rights reserved.</p>
+            <p class="attribution">RPG Sync Project</p>
+        </footer>
+    </section>
+</div>
+
+<!-- Event Popup Modal -->
+<div class="modal-overlay" id="eventPopupModal">
+    <div class="widget" style="padding: 0; overflow: hidden; width: 400px; max-width: 90%;">
+        <div style="position: relative;" id="popupImageContainer">
+            <!-- JS 렌더링 영역 -->
+        </div>
+        <div style="padding: 20px; background: rgba(11, 12, 26, 0.95);">
+            <h3 id="popupTitle" style="color: var(--text-main); margin: 0 0 15px 0; font-size: 1.2rem; text-align: center; font-family: 'Jura', sans-serif;"></h3>
+
+            <div style="display: flex; justify-content: space-between; border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 15px;">
+                <button onclick="closePopupForToday()" style="background: none; color: var(--text-muted); border: none; cursor: pointer; font-size: 0.85rem; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--text-muted)'">오늘은 그만 보기</button>
+                <button onclick="closePopupModal()" style="background: none; color: var(--accent-hero); border: none; cursor: pointer; font-size: 0.85rem; font-weight: bold; text-shadow: 0 0 5px rgba(0, 242, 254, 0.3); transition: text-shadow 0.2s;" onmouseover="this.style.textShadow='0 0 10px rgba(0,242,254,0.8)'" onmouseout="this.style.textShadow='0 0 5px rgba(0, 242, 254, 0.3)'">닫기</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/index.js?v=1.0.5"></script>
+{% endblock %}

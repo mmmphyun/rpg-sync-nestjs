@@ -7,7 +7,7 @@ import {
   JoinColumn,
   Index,
 } from 'typeorm';
-import { User } from './user.entity.js';
+import type { User } from './user.entity.js';
 
 @Entity('magic_tokens')
 export class MagicToken {
@@ -24,7 +24,7 @@ export class MagicToken {
   @CreateDateColumn({ name: 'created_at' })
   createdAt!: Date;
 
-  @ManyToOne(() => User, (user) => user.magicTokens, { onDelete: 'CASCADE' })
+  @ManyToOne('User', 'magicTokens', { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'discord_id' })
   user?: User;
 }

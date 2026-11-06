@@ -1,0 +1,733 @@
+/* =========================================
+   Jobs Layout & Filter
+   ========================================= */
+.jobs-container {
+    max-width: 1400px;
+    margin: 40px auto 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 80px - 60px);
+}
+
+/* =========================================
+   PREMIUM EDITORIAL HEADER SYSTEM
+   ========================================= */
+.editorial-header {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+    margin-top: 100px;
+}
+
+.editorial-title-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.sub-title-mono {
+    font-family: 'Space Mono', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    color: var(--accent-hero);
+    font-weight: 500;
+}
+
+.main-title {
+    font-family: 'Jura', sans-serif;
+    font-size: 2.8rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+    color: var(--text-main);
+    margin: 0;
+}
+
+.editorial-meta-line {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Space Mono', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: 16px;
+    letter-spacing: 0.1em;
+    border-top: 1px solid var(--border-faint);
+    padding-top: 8px;
+}
+
+.filter-dashboard-mobile-toggle {
+    display: none;
+}
+
+.filter-dashboard {
+    display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 20px;
+    background: var(--bg-widget-light); padding: 12px 20px;
+    border-radius: 0px; border: 1px solid var(--border-color);
+    backdrop-filter: blur(10px); align-items: center; justify-content: space-between;
+}
+
+.filter-group { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.filter-label { color: var(--text-muted); font-size: 0.8rem; margin-right: 5px; font-family: 'Space Mono', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; text-transform: uppercase; letter-spacing: 1px; }
+.filter-sep { width: 1px; height: 16px; background: var(--border-color); margin: 0 5px; }
+
+.filter-btn {
+    background: var(--bg-surface); color: var(--text-muted);
+    border: 1px solid var(--border-faint); padding: 5px 14px;
+    border-radius: 0px; font-size: 0.8rem; cursor: pointer; transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.filter-btn:hover { border-color: var(--border-light); color: var(--text-main); background: rgba(255, 255, 255, 0.02); }
+.filter-btn.active {
+    background: color-mix(in srgb, var(--accent-hero) 8%, transparent);
+    color: var(--accent-hero); border-color: var(--accent-hero);
+}
+
+.search-group {
+    display: flex; align-items: center; background: rgba(0,0,0,0.3);
+    border: 1px solid var(--border-color); border-radius: 0px; padding: 4px 12px;
+}
+.search-group i { color: var(--text-muted); margin-right: 8px; font-size: 0.85rem; }
+.search-input {
+    background: transparent; border: none; color: var(--text-main);
+    outline: none; font-size: 0.85rem; width: 180px;
+    font-family: inherit;
+}
+
+/* =========================================
+   Main Workspace & Slide-over Sidebar
+   ========================================= */
+.main-workspace {
+    position: relative; flex: 1; display: flex; overflow: hidden;
+    border-top: 1px solid var(--border-color); padding-top: 20px;
+}
+
+.grid-area {
+    flex: 1; display: block; overflow-y: auto; padding-right: 15px;
+}
+
+/* Slide-over */
+.sidebar {
+    position: absolute; top: 0; right: 0; height: 100%;
+    width: 60%; max-width: 1000px;
+    transform: translateX(100%);
+    background: var(--bg-widget-dark);
+    border-left: 1px solid var(--border-color);
+    box-shadow: none;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: hidden; z-index: 100;
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+}
+.sidebar.open { transform: translateX(0); border-left: 1px solid var(--accent-hero); }
+
+.sidebar-inner { width: 100%; height: 100%; padding: 20px; position: relative; }
+.sidebar-close {
+    position: absolute; top: 15px; right: 20px; background: none; border: none;
+    color: var(--text-muted); font-size: 1.5rem; cursor: pointer; z-index: 10;
+}
+.sidebar-close:hover { color: var(--accent-villain); }
+
+.slideover-layout {
+    display: flex; height: calc(100% - 20px); gap: 25px; margin-top: 20px;
+    overflow-y: auto; padding-right: 5px;
+}
+.slideover-layout::-webkit-scrollbar { width: 6px; }
+.slideover-layout::-webkit-scrollbar-track { background: transparent; }
+.slideover-layout::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 0px;
+}
+.slideover-layout::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-hero);
+}
+.slideover-left { flex: 0 0 35%; padding-right: 10px; border-right: 1px dashed var(--border-color); overflow: visible; }
+.slideover-right { flex: 1; padding-right: 10px; overflow-y: visible; }
+
+/* =========================================
+   Slide-over Left: Info & Media
+   ========================================= */
+.sidebar-portrait-wrapper { position: relative; width: 100%; aspect-ratio: 1/1; margin-bottom: 15px; border-radius: 0px; overflow: hidden; border: 1px solid var(--border-color); }
+.sidebar-portrait-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+.gallery-nav {
+    position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.6);
+    color: #fff; border: none; padding: 10px; cursor: pointer; font-size: 1rem; transition: background 0.2s;
+}
+.gallery-nav.prev { left: 0; border-radius: 0px; }
+.gallery-nav.next { right: 0; border-radius: 0px; }
+.gallery-nav:hover { background: var(--accent-hero); }
+
+.sidebar-name { font-size: 1.4rem; font-weight: 800; color: var(--text-main); margin-bottom: 5px; }
+.sidebar-gate { font-size: 0.8rem; color: var(--accent-warning); margin-bottom: 15px; font-family: 'Space Mono', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+.sidebar-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border-faint); }
+.req-condition { margin-top: 10px; color: var(--accent-villain); font-size: 0.8rem; font-weight: bold; font-family: 'Space Mono', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+
+.sidebar-patches-wrapper { margin-top: 20px; background: rgba(0,0,0,0.2); border-radius: 0px; border: 1px solid var(--border-faint); overflow: hidden; }
+.patch-header { padding: 12px 15px; display: flex; justify-content: space-between; cursor: pointer; background: var(--bg-widget-light); }
+.patch-header h4 { font-size: 0.8rem; color: var(--accent-hero); margin: 0; font-family: 'Space Mono', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+.patch-entry { padding: 10px 15px; border-top: 1px solid var(--border-faint); }
+.patch-date { font-size: 0.7rem; color: var(--accent-info); margin-bottom: 4px; font-family: 'Space Mono', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+.patch-notes { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
+
+/* =========================================
+   Custom Scrollbar
+   ========================================= */
+.grid-area::-webkit-scrollbar,
+.inner-scroll::-webkit-scrollbar {
+    width: 6px;
+}
+
+.grid-area::-webkit-scrollbar-track,
+.inner-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.grid-area::-webkit-scrollbar-thumb,
+.inner-scroll::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 0px;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.grid-area::-webkit-scrollbar-thumb:hover,
+.inner-scroll::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-hero);
+}
+
+/* =========================================
+   Slide-over Left: Review Summary & Button
+   ========================================= */
+.sidebar-review-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border-faint);
+    padding: 10px 14px;
+    border-radius: 0px;
+    margin-bottom: 20px;
+}
+
+.rating-text {
+    color: var(--accent-warning);
+    font-weight: bold;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    font-family: 'Space Mono', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+.review-btn {
+    background: var(--bg-surface);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    padding: 5px 14px;
+    border-radius: 0px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Space Mono', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+.review-btn:hover {
+    background: color-mix(in srgb, var(--accent-hero) 8%, transparent);
+    color: var(--accent-hero);
+    border-color: var(--accent-hero);
+}
+
+/* =========================================
+   Slide-over Right: Combat System (2-Grid)
+   ========================================= */
+.weapon-tabs-container { display: flex; gap: 8px; margin-bottom: 20px; padding-bottom: 8px; overflow-x: auto; }
+.weapon-tab {
+    flex: 1; min-width: 80px; padding: 10px; text-align: center; border-radius: 0px;
+    background: var(--bg-surface); border: 1px solid var(--border-color);
+    cursor: pointer; transition: all 0.2s; position: relative;
+}
+.weapon-tab:hover { border-color: var(--border-light); }
+.weapon-tab.active { background: color-mix(in srgb, var(--accent-hero) 8%, transparent); border-color: var(--accent-hero); }
+.weapon-tab i.main-icon { display: block; font-size: 1.4rem; color: var(--text-muted); margin-bottom: 6px; transition: color 0.2s; }
+.weapon-tab.active i.main-icon { color: var(--accent-hero); }
+.weapon-name-text { font-size: 0.75rem; color: var(--text-muted); transition: color 0.2s; font-family: 'Space Mono', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+.weapon-tab.active .weapon-name-text { color: var(--text-main); font-weight: bold; }
+.form-badge-dot {
+    position: absolute; top: 6px; right: 6px; width: 6px; height: 6px;
+    background: var(--accent-villain); border-radius: 0px;
+}
+.weapon-tab.active.form-active {
+    background: color-mix(in srgb, var(--accent-villain) 8%, transparent);
+    border-color: var(--accent-villain);
+}
+.weapon-tab.active.form-active i.main-icon {
+    color: var(--accent-villain);
+}
+.weapon-form-indicator {
+    display: flex; align-items: center; justify-content: center; gap: 4px;
+    margin-top: 8px; padding-top: 4px;
+    font-size: 0.7rem; font-weight: bold;
+    font-family: 'Space Mono', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    width: 100%;
+}
+
+.skill-section-title { font-size: 0.95rem; color: var(--text-main); margin: 20px 0 10px 0; padding-bottom: 5px; border-bottom: 1px solid var(--border-color); font-family: 'Space Mono', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; text-transform: uppercase; letter-spacing: 0.5px; }
+.skill-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+.skill-card {
+    background: rgba(0,0,0,0.3); border: 1px solid var(--border-faint);
+    border-radius: 0px; padding: 12px; display: flex; flex-direction: column;
+}
+.skill-card:hover {
+    border-color: var(--accent-warning);
+    background: rgba(0, 0, 0, 0.5);
+}
+.skill-header-top { margin-bottom: 6px; width: 100%; overflow: hidden; }
+.skill-title {
+    font-size: 0.9rem; color: var(--accent-warning); line-height: 1.3;
+    display: flex; align-items: center;
+    flex-wrap: nowrap; gap: 4px;
+}
+.skill-name-text {
+    flex: 1; min-width: 0;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    font-weight: 700;
+}
+.skill-meta-row {
+    display: flex; align-items: center; font-size: 0.75rem; color: var(--text-muted);
+    margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px dashed var(--border-faint);
+}
+.skill-desc {
+    font-size: 0.8rem; color: #ccc; line-height: 1.5; flex: 1;
+    max-height: 80px; overflow-y: auto; margin-bottom: 8px; padding-right: 5px;
+}
+.skill-footer { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); border-top: 1px dashed var(--border-faint); padding-top: 8px; font-family: 'Space Mono', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+.skill-footer .coef { color: var(--text-main); }
+.mobility-tag { color: var(--accent-info); }
+
+/* =========================================
+   Skill Command Keyboard Style
+   ========================================= */
+kbd.key-kbd {
+    display: inline-block;
+    padding: 1px 5px;
+    font-family: 'Space Mono', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--text-main);
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 0px;
+    box-shadow: 1px 1px 0 var(--border-color);
+    margin: 0 1px;
+    vertical-align: middle;
+}
+
+.key-plus {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    margin: 0 1px;
+    font-weight: bold;
+}
+
+.passive-tag {
+    color: var(--accent-info);
+    font-weight: bold;
+    font-size: 0.8rem;
+    margin-right: 4px;
+    font-family: 'Space Mono', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+.cmd-wrapper {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 4px;
+}
+
+/* =========================================
+   Job Grid & Tiles
+   ========================================= */
+.group-label {
+    color: var(--text-muted); font-size: 0.8rem; letter-spacing: 1px;
+    text-transform: uppercase; margin: 20px 0 10px 0; padding-bottom: 5px;
+    border-bottom: 1px solid var(--border-faint); font-family: 'Space Mono', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+.group-label:first-child { margin-top: 0; }
+
+.champ-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 12px;
+    margin-bottom: 20px;
+}
+
+.champ-tile {
+    display: flex; flex-direction: column; align-items: center;
+    cursor: pointer; padding: 10px 5px; border-radius: 0px;
+    transition: background 0.2s; position: relative;
+}
+.champ-tile:hover { background: rgba(255, 255, 255, 0.04); }
+.champ-tile.selected { background: color-mix(in srgb, var(--accent-hero) 8%, transparent); }
+
+.champ-portrait {
+    width: 64px; height: 64px; border-radius: 0px;
+    border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; font-weight: 700; color: #fff;
+    transition: all 0.2s ease; position: relative;
+    background-color: var(--bg-widget-medium);
+}
+.champ-portrait img { width: 100%; height: 100%; object-fit: cover; border-radius: 0px; z-index: 1; }
+.champ-tile:hover .champ-portrait { border-color: var(--accent-hero); }
+.champ-tile.selected .champ-portrait { border-color: var(--accent-hero); }
+
+.active-dot {
+    position: absolute; bottom: -2px; right: -2px; width: 10px; height: 10px;
+    background: var(--accent-success); border-radius: 0px;
+    border: 1px solid var(--bg-surface); z-index: 10;
+}
+
+.player-tooltip {
+    display: none; position: absolute; bottom: calc(100% + 5px); left: 50%; transform: translateX(-50%);
+    background: var(--bg-widget-dark); border: 1px solid var(--border-color); color: #fff;
+    font-size: 0.7rem; padding: 4px 10px; border-radius: 0px; white-space: nowrap; z-index: 10;
+}
+.champ-tile:hover .player-tooltip { display: block; }
+
+.champ-name {
+    font-size: 0.75rem; color: var(--text-main); margin-top: 6px;
+    text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%;
+}
+
+.champ-mini-tags { display: flex; gap: 4px; margin-top: 4px; flex-wrap: wrap; justify-content: center; }
+.mini-tag { font-size: 0.6rem; padding: 1px 5px; border-radius: 0px; font-weight: 600; font-family: 'Space Mono', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+.sidebar-tag { font-size: 0.7rem; padding: 2px 8px; border-radius: 0px; font-weight: 600; font-family: 'Space Mono', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+
+/* =========================================
+   Utilities: Theme Classes
+   ========================================= */
+.t-melee      { background: var(--accent-villain); color: #fff; }
+.t-ranged     { background: var(--accent-info); color: #fff; }
+.t-hybrid     { background: linear-gradient(135deg, var(--accent-villain), var(--accent-info)); color: #fff; }
+.t-unknown    { background: #3a3a4a; color: #999; }
+.t-phys       { background: #e67e22; color: #fff; }
+.t-magic      { background: #8e44ad; color: #fff; }
+.t-hybrid-dmg { background: linear-gradient(135deg, #e67e22, #8e44ad); color: #fff; }
+.t-tank       { background: var(--accent-success); color: #fff; }
+.t-heal       { background: #9b59b6; color: #fff; }
+.t-util       { background: #16a085; color: #fff; }
+.t-ki         { background: #d4a017; color: #1a1a1a; }
+.t-mana       { background: #2471a3; color: #fff; }
+.t-hp         { background: var(--accent-success); color: #fff; }
+.t-en         { background: #AFEEEE; color: #1a1a1a; }
+.t-none       { background: #444; color: #aaa; }
+.t-yes        { background: var(--accent-success); color: #fff; }
+.t-no         { background: var(--accent-villain); color: #fff; }
+.t-limit      { background: var(--accent-villain); color: #fff; border: 1px solid #fff; }
+
+.bg-phys       { background: linear-gradient(135deg, #2c1810, #1a0f08); }
+.bg-magic      { background: linear-gradient(135deg, #1f1028, #140a1a); }
+.bg-hybrid-dmg { background: linear-gradient(135deg, #2c1810, #1a0f08); }
+.bg-tank       { background: linear-gradient(135deg, #0f2818, #081a0f); }
+.bg-heal       { background: linear-gradient(135deg, #1f1028, #140a1a); }
+.bg-util       { background: linear-gradient(135deg, #0a2020, #061515); }
+.bg-unknown    { background: linear-gradient(135deg, #1a1a2a, #101018); }
+
+/* Static thin borders for hero/villain indicator */
+.type-hero.champ-portrait {
+    border: 1px solid var(--accent-info) !important;
+}
+
+.type-villain.champ-portrait {
+    border: 1px solid var(--accent-villain) !important;
+}
+
+/* =========================================
+   Review Modal Styles
+   ========================================= */
+.review-widget-modal {
+    width: 500px; max-width: 90vw; max-height: 80vh;
+    display: flex; flex-direction: column; padding: 0 !important;
+}
+
+/* 헤더 */
+.modal-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 15px 20px; background: rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid var(--border-color);
+}
+.modal-header h3 { margin: 0; color: var(--accent-hero); font-size: 0.95rem; font-family: 'Space Mono', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+.modal-close {
+    background: none; border: none; color: var(--text-muted);
+    font-size: 1.5rem; cursor: pointer; transition: color 0.2s;
+}
+.modal-close:hover { color: var(--accent-villain); }
+
+/* 리뷰 목록 */
+.review-list { padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+.review-item {
+    background: rgba(0, 0, 0, 0.2); border: 1px solid var(--border-faint);
+    border-radius: 0px; padding: 12px;
+}
+/* JS에서 주입된 인라인 스타일 강제 덮어쓰기 */
+.review-item .review-rating { color: var(--accent-warning) !important; font-size: 0.85rem !important; }
+.review-item span[style*="color:#666"] { color: var(--text-muted) !important; font-size: 0.75rem !important; font-family: 'Space Mono', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+.review-item .review-comment-text { color: var(--text-main) !important; margin-top: 6px; font-size: 0.85rem; }
+
+/* 작성 폼 영역 */
+.review-form-area {
+    padding: 20px; background: rgba(0, 0, 0, 0.4);
+    border-top: 1px solid var(--border-color);
+}
+#reviewForm { display: flex; flex-direction: column; gap: 12px; }
+
+.rating-select { display: flex; align-items: center; gap: 10px; color: var(--text-main); font-size: 0.85rem; font-family: 'Space Mono', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+#reviewRating {
+    background: var(--bg-surface); color: var(--text-main);
+    border: 1px solid var(--border-color); padding: 5px 10px;
+    border-radius: 0px; outline: none; cursor: pointer;
+    font-family: inherit; font-size: 0.8rem;
+}
+#reviewRating:focus { border-color: var(--accent-hero); }
+
+#reviewComment {
+    width: 100%; height: 80px; background: var(--bg-surface); color: var(--text-main);
+    border: 1px solid var(--border-color); padding: 10px; border-radius: 0px;
+    resize: none; outline: none; font-family: inherit; font-size: 0.85rem;
+}
+#reviewComment:focus { border-color: var(--accent-hero); }
+
+.review-notice { color: var(--text-muted); font-size: 0.7rem; }
+
+.review-submit-btn {
+    background: color-mix(in srgb, var(--accent-hero) 8%, transparent);
+    color: var(--accent-hero); border: 1px solid var(--accent-hero);
+    padding: 8px; border-radius: 0px; font-weight: bold; cursor: pointer;
+    transition: all 0.2s; font-family: 'Space Mono', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-size: 0.8rem;
+}
+.review-submit-btn:hover {
+    background: var(--accent-hero); color: #000;
+}
+
+.review-auth-blocker { text-align: center; color: var(--text-muted); font-size: 0.85rem; padding: 10px 0; font-family: 'Space Mono', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+
+/* 모바일/태블릿 반응형 */
+@media screen and (max-width: 1024px) {
+    /* 높이 제한 해제 & 전체 스크롤 레이아웃 */
+    .jobs-container {
+        height: auto;
+        margin-top: 20px;
+        padding: 15px;
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+    .main-workspace {
+        height: auto;
+        overflow: visible;
+        border-top: none;
+        padding-top: 10px;
+    }
+    .grid-area {
+        overflow-y: visible;
+        padding-right: 0;
+    }
+
+    /* 헤더 축소 */
+    .editorial-header {
+        margin-top: 60px; /* 상단 고정 헤더바 침범 방지 최소한의 마진 */
+        margin-bottom: 15px;
+        padding-bottom: 12px;
+    }
+    .main-title {
+        font-size: 1.8rem;
+    }
+    .sub-title-mono {
+        font-size: 0.65rem;
+    }
+    .editorial-meta-line {
+        margin-top: 10px;
+        padding-top: 6px;
+    }
+
+    /* 모바일 토글 슬라이더 버튼 노출 */
+    .filter-dashboard-mobile-toggle {
+        display: block;
+        margin-bottom: 12px;
+        margin-top: 10px;
+    }
+    .filter-toggle-btn {
+        width: 100%;
+        padding: 8px 12px;
+        background: var(--bg-widget-light);
+        border: 1px solid var(--border-color);
+        color: var(--text-muted);
+        font-family: 'Space Mono', 'Pretendard', sans-serif;
+        font-size: 0.8rem;
+        font-weight: bold;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.2s ease;
+    }
+    .filter-toggle-btn:hover {
+        border-color: var(--accent-hero);
+        color: var(--accent-hero);
+        background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* 필터 대시보드 접이식 아코디언 애니메이션 */
+    .filter-dashboard.collapsible {
+        max-height: 1000px;
+        opacity: 1;
+        margin-bottom: 20px;
+        padding: 12px;
+        border: 1px solid var(--border-color);
+        transition: max-height 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, padding 0.45s ease, margin-bottom 0.45s ease, border-color 0.45s ease;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap !important; /* flex-wrap wrap 상속을 명시적으로 차단하여 가로 팽창 방지 */
+        align-items: stretch;
+        gap: 12px;
+    }
+    .filter-dashboard.collapsible.collapsed {
+        max-height: 0 !important;
+        opacity: 0 !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        margin-bottom: 0 !important;
+        border-top-width: 0 !important;
+        border-bottom-width: 0 !important;
+        border-color: transparent !important;
+        pointer-events: none;
+    }
+
+    /* 필터 내부 요소 정렬 정돈 (4열 그리드 배치) */
+    .filter-group {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 6px;
+        width: 100%;
+    }
+    .filter-sep {
+        display: none; /* 모바일에서 깨지는 가로 구분선 숨김 */
+    }
+    .filter-label {
+        grid-column: 1 / -1; /* 라벨은 가로 전체 단독 행 차지 */
+        margin-bottom: 2px;
+        font-size: 0.7rem;
+    }
+    .filter-group .filter-btn {
+        padding: 6px 0;
+        font-size: 0.75rem;
+        text-align: center;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .search-group {
+        width: 100%;
+        box-sizing: border-box;
+        justify-content: flex-start;
+        margin-top: 4px;
+    }
+    .search-input {
+        width: 100%;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100dvh;
+        z-index: 2000;
+        transform: translateX(100%);
+        border-left: none;
+    }
+    .sidebar.open {
+        transform: translateX(0);
+        border-left: none;
+    }
+    .sidebar-inner {
+        padding: 15px;
+        height: 100%;
+    }
+    .sidebar-close {
+        top: 10px;
+        right: 15px;
+        font-size: 1.3rem;
+    }
+    .slideover-layout {
+        flex-direction: column;
+        overflow-y: auto;
+        height: calc(100% - 30px);
+        margin-top: 25px;
+        gap: 15px;
+    }
+    .slideover-left {
+        flex: none;
+        border-right: none;
+        border-bottom: 1px dashed var(--border-color);
+        padding-bottom: 15px;
+    }
+    .slideover-right {
+        padding-top: 10px;
+    }
+
+    /* A안: 미니 썸네일 + 가로 배치 프로필 */
+    .sidebar-profile-header {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        width: 100%;
+    }
+    .sidebar-portrait-wrapper {
+        width: 90px;
+        height: 90px;
+        flex-shrink: 0;
+        margin-bottom: 0;
+    }
+    .sidebar-info-summary {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+    }
+    .sidebar-name {
+        font-size: 1.15rem;
+        margin-bottom: 2px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .sidebar-gate {
+        font-size: 0.75rem;
+        margin-bottom: 4px;
+    }
+    .sidebar-review-summary {
+        margin-bottom: 6px;
+        padding: 4px 10px;
+    }
+    .rating-text {
+        font-size: 0.8rem;
+    }
+    .review-btn {
+        padding: 3px 10px;
+        font-size: 0.7rem;
+    }
+    .sidebar-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+    .sidebar-tag {
+        font-size: 0.65rem;
+        padding: 1px 6px;
+    }
+    .sidebar-desc {
+        margin-top: 12px;
+        padding-top: 12px;
+        font-size: 0.8rem;
+        line-height: 1.5;
+    }
+}
+@media screen and (max-width: 768px) {
+    .skill-grid { grid-template-columns: 1fr; }
+}

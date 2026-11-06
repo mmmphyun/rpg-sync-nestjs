@@ -3,16 +3,16 @@ import {
   Post,
   Get,
   Body,
+  Req,
   Res,
   UseGuards,
   BadRequestException,
-  UnauthorizedException,
   InternalServerErrorException,
   HttpStatus,
   HttpCode,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import type { Response } from 'express';
+import type { Request, Response } from 'express';
 import { AuthService } from './auth.service.js';
 import { RedisService } from '../redis/redis.service.js';
 import { JwtAuthGuard } from './guards/jwt-auth.guard.js';
@@ -47,16 +47,21 @@ export class AuthController {
 
   /**
    * 2. 매직 링크 검증 및 세션 쿠키 발급 (1회성 소비 트랜잭션)
+   * - 브라우저 Form 자동 제출 시 302 리다이렉트 지원
+   * - REST API 클라이언트 호출 시 JSON 응답 지원
    */
   @Post('verify')
-  @HttpCode(HttpStatus.OK)
   async verifyMagicLink(
     @Body() dto: VerifyMagicTokenDto,
-    @Res({ passthrough: true }) res: Response,
+    @Req() req: Request,
+    @Res() res: Response,
   ) {
     const userData = await this.authService.verifyAndConsumeMagicToken(dto.token);
 
     if (!userData) {
+      if (req.headers['accept']?.includes('text/html')) {
+        return res.redirect('/?error=invalid_token');
+      }
       throw new BadRequestException('유효하지 않거나 이미 만료된 토큰입니다.');
     }
 
@@ -69,20 +74,32 @@ export class AuthController {
 
     const jwtToken = await this.jwtService.signAsync(payload);
 
-    // HttpOnly & Secure 세션 쿠키 설정
+    // HttpOnly 세션 쿠키 설정 (로컬 개발 환경에서는 Secure를 false로 두어 HTTP 쿠키 유실 방지)
+    const isProduction = process.env.NODE_ENV === 'production';
     res.cookie('forum_session', jwtToken, {
       httpOnly: true,
-      secure: true,
-      sameSite: 'strict',
+      secure: isProduction,
+      sameSite: 'lax', // 리다이렉트 시 쿠키 전송 보장을 위해 lax 권장
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7일
       path: '/',
     });
 
-    return {
+    const targetUrl = dto.redirectTo === 'guide' ? '/guide' : '/';
+
+    // 브라우저 Form 제출 시 리다이렉트 수행
+    const isFormSubmit =
+      req.headers['accept']?.includes('text/html') ||
+      req.headers['content-type']?.includes('application/x-www-form-urlencoded');
+
+    if (isFormSubmit) {
+      return res.redirect(targetUrl);
+    }
+
+    return res.status(HttpStatus.OK).json({
       message: '로그인 인증에 성공했습니다.',
-      redirectTo: dto.redirectTo === 'guide' ? '/guide' : '/',
+      redirectTo: targetUrl,
       user: payload,
-    };
+    });
   }
 
   /**
@@ -137,8 +154,8 @@ export class AuthController {
     res.clearCookie('forum_session', {
       path: '/',
       httpOnly: true,
-      secure: true,
-      sameSite: 'strict',
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
     });
 
     return { message: 'success' };

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}RPG Sync Wiki{% endblock %}</title>
+    {% block robots %}{% endblock %}
+
+    <!-- 오픈 그래프 (Open Graph / 링크 미리보기) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://rpg-sync-wiki.example.com">
+    <meta property="og:title" content="RPG Sync Wiki - RPG 서버 공식 위키">
+    <meta name="description" content="{% block og_description %}RPG 서버의 다양한 가이드, 직업 설명, 실시간 서버 상태와 이벤트 소식을 확인해보세요!{% endblock %}">
+    <meta property="og:description" content="{{ self.og_description() }}">
+    <meta property="og:image" content="https://assets.rpg-sync-wiki.example.com/banners/07b0001491ba4756912b6e1af7d653b7.png">
+
+    <!-- 트위터 카드 (X / 트위터 공유용) -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rpg-sync-wiki.example.com">
+    <meta name="twitter:title" content="RPG Sync Wiki - RPG 서버 공식 위키">
+    <meta name="twitter:description" content="{{ self.og_description() }}">
+    <meta name="twitter:image" content="https://assets.rpg-sync-wiki.example.com/banners/07b0001491ba4756912b6e1af7d653b7.png">
+
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    <link rel="stylesheet" href="/static/global.css?v={{ get_mtime('global.css') }}">
+    <link rel="manifest" href="/images/manifest.json">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/rpg-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/swiper-bundle.min.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jura:wght@600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- 전역 최우선 팝업 레이어 -->
+    <div id="global-popup-overlay" class="modal-overlay hidden">
+        <div id="global-popup-content" class="modal-content"></div>
+    </div>
+
+    <!-- 투명 GNB 헤더 -->
+    <header class="global-header transparent" id="global-header">
+        <div class="header-inner">
+            <a href="/" class="logo" style="text-decoration: none; color: inherit;">RPG Sync Wiki</a>
+            <nav class="gnb-nav">
+                <a href="/notice">공지사항</a>
+                <a href="/event">이벤트</a>
+                <a href="/jobs">직업설명</a>
+                <a href="/tips">팁</a>
+            </nav>
+            <div id="user-status-area">
+                <!-- base.js에서 렌더링 -->
+            </div>
+        </div>
+    </header>
+
+    <main class="viewport-container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="dash-footer">
+        <div class="footer-container">
+            <p>&copy; 2026 RPG Sync Gate. All rights reserved.</p>
+            <p class="attribution">RPG Sync Project</p>
+        </div>
+    </footer>
+
+    <script src="/static/base.js?v={{ get_mtime('base.js') }}"></script>
+    <script src="/static/js/swiper-bundle.min.js"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPG Sync Wiki - 보안 인증 처리</title>
+    {% block robots %}<meta name="robots" content="noindex, nofollow">{% endblock %}
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <link rel="stylesheet" href="/static/global.css?v=1.0.2">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jura:wght@600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+    <style>
+        :root {
+            /* global.css 로드 지연 시 레이아웃 플리커링(Layout Shift)을 100% 원천 차단하는 완벽한 방어용 로컬 CSS 토큰 */
+            --bg-base: #0D1117;
+            --bg-surface: #161B22;
+            --bg-widget-dark: rgba(22, 27, 34, 0.85);
+            --accent-hero: #10B981;
+            --text-main: #E2E8F0;
+            --text-muted: #8B949E;
+            --border-color: #30363D;
+            --border-faint: rgba(255, 255, 255, 0.04);
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+        }
+        .auth-card {
+            background: var(--bg-widget-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 0px !important;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 15px rgba(16, 185, 129, 0.02);
+            position: relative;
+            max-width: 400px;
+            width: 90%;
+            padding: 40px 32px;
+            text-align: center;
+            box-sizing: border-box;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        /* 하이테크 브래킷 데코 */
+        .auth-card::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            bottom: -1px;
+            left: -1px;
+            width: 10px;
+            border-top: 1px solid var(--accent-hero);
+            border-bottom: 1px solid var(--accent-hero);
+            border-left: 1px solid var(--accent-hero);
+            pointer-events: none;
+            box-shadow: -2px 0 8px rgba(16, 185, 129, 0.2);
+        }
+        .auth-card::after {
+            content: '';
+            position: absolute;
+            top: -1px;
+            bottom: -1px;
+            right: -1px;
+            width: 10px;
+            border-top: 1px solid var(--accent-hero);
+            border-bottom: 1px solid var(--accent-hero);
+            border-right: 1px solid var(--accent-hero);
+            pointer-events: none;
+            box-shadow: 2px 0 8px rgba(16, 185, 129, 0.2);
+        }
+        .auth-header {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--accent-hero);
+            letter-spacing: 3px;
+            border-bottom: 1px solid var(--border-faint);
+            padding-bottom: 16px;
+            margin-bottom: 28px;
+            text-shadow: 0 0 6px rgba(16, 185, 129, 0.3);
+        }
+        .cyber-loader-container {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 24px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .cyber-loader {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px dashed rgba(16, 185, 129, 0.15);
+            border-radius: 50%;
+            animation: spin-clockwise 12s linear infinite;
+        }
+        .cyber-loader-inner {
+            position: absolute;
+            width: 80%;
+            height: 80%;
+            border: 2px solid transparent;
+            border-top-color: var(--accent-hero);
+            border-bottom-color: var(--accent-hero);
+            border-radius: 50%;
+            animation: spin-counter 1.5s cubic-bezier(0.53, 0.21, 0.29, 0.67) infinite;
+        }
+        .security-icon {
+            color: var(--accent-hero);
+            font-size: 1.6rem;
+            z-index: 2;
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+        .status-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin: 0 0 8px 0;
+            letter-spacing: 0.5px;
+        }
+        .status-desc {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin: 0 0 28px 0;
+        }
+        .scan-bar-container {
+            width: 100%;
+            height: 2px;
+            background: var(--border-faint);
+            position: relative;
+            overflow: hidden;
+        }
+        .scan-bar {
+            width: 40%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, var(--accent-hero), transparent);
+            position: absolute;
+            animation: scan 1.8s ease-in-out infinite;
+        }
+        @keyframes spin-clockwise {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes spin-counter {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(-360deg); }
+        }
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.6; transform: scale(0.95); text-shadow: 0 0 5px rgba(16, 185, 129, 0.2); }
+            50% { opacity: 1; transform: scale(1.05); text-shadow: 0 0 15px rgba(16, 185, 129, 0.6); }
+        }
+        @keyframes scan {
+            0% { left: -40%; }
+            100% { left: 100%; }
+        }
+    </style>
+</head>
+<body onload="document.getElementById('login-form').submit();">
+    <div class="auth-card">
+        <div class="auth-header">SYSTEM // SECURE_AUTH</div>
+        <div class="cyber-loader-container">
+            <div class="cyber-loader"></div>
+            <div class="cyber-loader-inner"></div>
+            <i class="fa-solid fa-shield-halved security-icon"></i>
+        </div>
+        <h2 class="status-title">보안 토큰 검증 중</h2>
+        <p class="status-desc">사용자 인증 정보를 안전하게 대조하고 있습니다.<br>잠시만 기다려 주십시오.</p>
+        <div class="scan-bar-container">
+            <div class="scan-bar"></div>
+        </div>
+    </div>
+    <form id="login-form" action="/api/v1/auth/verify" method="POST" style="display: none;">
+        <input type="hidden" name="token" value="{{ token }}">
+        <input type="hidden" name="redirect_to" value="{{ redirect }}">
+    </form>
+</body>
+</html>
